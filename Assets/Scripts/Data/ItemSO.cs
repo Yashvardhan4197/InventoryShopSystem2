@@ -6,18 +6,12 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName ="newItem",menuName ="ScriptableObjects/Item/Item_Object")]
 public class ItemSO : ScriptableObject
 {
-    [field: SerializeField]public bool isStackable {  get; set; }
-    [field: SerializeField] public int MaxStackableSize { get; set; } = 1;
-    [field: SerializeField] public Sprite image { get; set; }
-    [field: SerializeField] public string itemName { get; set; }
-    [field: SerializeField] public int id;//=>GetInstanceID();
-    [field: SerializeField]
-    [field: TextArea]
-    public string description { get; set; }
+    [SerializeField] private Sprite image;
+    [SerializeField] private string itemName;
+    [SerializeField] [field: TextArea] private string description;
 
+    public Sprite Image => image;
+    public string ItemName => itemName;
+    public string Description => description;
 
-    public void SetName(string name)
-    {
-        this.itemName = name;
-    }
 }
