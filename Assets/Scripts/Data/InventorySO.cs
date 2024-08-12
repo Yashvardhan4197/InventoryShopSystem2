@@ -8,7 +8,7 @@ using UnityEngine;
 public class InventorySO : ScriptableObject
 {
     public Dictionary<int,InventoryItemData> inventoryItemData;
-    [field: SerializeField]public int TotalSlots { get; private set; } = 10;
+    [field: SerializeField]public int TotalSlots { get; private set; }
 
     [SerializeField] public ItemSO StartingItem1;
     [SerializeField] public ItemSO StartingItem2;
@@ -25,13 +25,14 @@ public class InventorySO : ScriptableObject
         for(int i=0;i<TotalSlots; i++)
         {
             InventoryItemData newItemData = InventoryItemData.GetEmptyItem();
+            newItemData.uniqueID = i;
             inventoryItemData.Add(newItemData.uniqueID,newItemData);
         }
         
     }
     public void AddItem(ItemSO item, int quantity)
     {
-
+        //Debug.Log("Added Item");
         foreach(var itemData in inventoryItemData)
         {
             if (itemData.Value.itemID != -1 && itemData.Value.item==item)
@@ -51,6 +52,34 @@ public class InventorySO : ScriptableObject
                 if(itemData.Value.quantity>1) { 
                 }
                 itemData.Value.ChangeQuantity(quantity);
+                itemData.Value.SetItemID();
+                break;
+            }
+        }
+    }
+
+    public void IncrementItemQuantity(ItemSO item)
+    {
+        foreach (var itemData in inventoryItemData)
+        {
+            if (itemData.Value.itemID != -1 && itemData.Value.item == item)
+            {
+                if (itemData.Value.item.isStackable == true)
+                {
+                    itemData.Value.ChangeQuantity(itemData.Value.quantity+1);
+                }
+                return;
+            }
+        }
+        foreach (var itemData in inventoryItemData)
+        {
+            if (itemData.Value.isEmpty())
+            {
+                itemData.Value.item = item;
+                if (itemData.Value.quantity > 1)
+                {
+                }
+                itemData.Value.ChangeQuantity(itemData.Value.quantity + 1);
                 itemData.Value.SetItemID();
                 break;
             }
@@ -81,7 +110,7 @@ public class InventoryItemData
     public int quantity;
     public int itemID=-1;
     public int uniqueID;
-    private static int idcounter = 0;
+   // private int idcounter = 0;
     public InventoryItemData(ItemSO item,int quantity)
     {
         this.item = item;
@@ -94,7 +123,6 @@ public class InventoryItemData
         {
             itemID = -1;
         }
-        uniqueID = idcounter++;
     }
     public bool isEmpty()
     {

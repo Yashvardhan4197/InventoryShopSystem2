@@ -3,20 +3,6 @@ using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
-    private static InventoryController instance;
-    public static InventoryController Instance { get{ return instance; }}
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
 
     [SerializeField]public UIInventoryDescription inventoryDescription;
@@ -85,7 +71,7 @@ public class InventoryController : MonoBehaviour
                 int changedValue=item.Value.quantity;
                 changedValue--;
                 item.Value.ChangeQuantity(changedValue);
-                Debug.Log("Hello Again" + item.Value.quantity);
+                //Debug.Log("Hello Again" + item.Value.quantity);
                 if (changedValue <= 0)
                 {
                     item.Value.ResetItemSlot();
@@ -99,6 +85,15 @@ public class InventoryController : MonoBehaviour
             }
         }
         
+    }
+
+    public void UpdateFullInventory()
+    {
+        foreach (var item in inventorySO.GetInventoryItemData())
+        {
+            //Debug.Log("ItemsUpdated");
+            inventoryPage.UpdateInventory(item.Key, item.Value.item.image, item.Value.quantity);
+        }
     }
     
 

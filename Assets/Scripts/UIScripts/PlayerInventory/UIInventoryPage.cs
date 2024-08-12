@@ -11,7 +11,7 @@ public class UIInventoryPage : MonoBehaviour
 
     public Dictionary<int,InventoryItem> ItemList = new Dictionary<int,InventoryItem>();
     
-    public List<InventoryItem> ListOfItems=new List<InventoryItem>();
+   // public List<InventoryItem> ListOfItems=new List<InventoryItem>();
 
  
     public void InitializeItems(int totalElements)
@@ -20,8 +20,8 @@ public class UIInventoryPage : MonoBehaviour
         {
             InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
             newItem.transform.SetParent(controlPanel);
-            newItem.inventoryitemID = inventoryController.inventorySO.inventoryItemData[i].uniqueID;
-            ItemList.Add(i, newItem);
+            newItem.inventoryitemID =i;
+            ItemList.Add(i,newItem);
             newItem.OnButtonPressed += OnInventoryItemButtonPressed;
         }
     }
@@ -79,6 +79,7 @@ public class UIInventoryPage : MonoBehaviour
         {
             if (item.Value.inventoryitemID == itemID)
             {
+                Debug.Log("Updating Inventory");
                 item.Value.SetData(itemID, itemImage, amount);
                 break;
             }

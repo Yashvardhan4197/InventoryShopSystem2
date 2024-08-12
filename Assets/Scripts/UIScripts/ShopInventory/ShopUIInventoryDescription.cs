@@ -1,28 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UIInventoryDescription : MonoBehaviour
+public class ShopUIInventoryDescription : MonoBehaviour
 {
     private int id;
     [SerializeField] Image Image;
     [SerializeField] TextMeshProUGUI Title;
     [SerializeField] TextMeshProUGUI Description;
     [SerializeField] Button UseItemButton;
-    [SerializeField]InventoryController inventoryController;
+    [SerializeField] ShopInventoryController inventoryController;
 
     private void Awake()
     {
         ResetDescription();
         UseItemButton.onClick.AddListener(UseItem);
     }
-    public void SetDescription(int id,Sprite Image, string Title,string Desc)
+    public void SetDescription(int id, Sprite Image, string Title, string Desc)
     {
-        this.id =id;
+        this.id = id;
         this.Description.gameObject.SetActive(true);
         this.Image.gameObject.SetActive(true);
         this.Title.gameObject.SetActive(true);
@@ -41,6 +39,14 @@ public class UIInventoryDescription : MonoBehaviour
 
     public void UseItem()
     {
+        foreach (var item in inventoryController.ShopinventorySO.GetInventoryItemData())
+        {
+            if (item.Value.uniqueID == id)
+            {
+                inventoryController.Buyitem(item.Value.itemID);
+            }
+        }
+        /*
         foreach (var item in inventoryController.inventorySO.GetInventoryItemData())
         {
             if (item.Key == id)
@@ -61,6 +67,7 @@ public class UIInventoryDescription : MonoBehaviour
                 return;
             }
         }
+        */
         //InventoryController.Instance.UseItemButtonPressed(id);
     }
 }

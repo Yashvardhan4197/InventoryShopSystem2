@@ -10,7 +10,7 @@ public class ItemSO : ScriptableObject
     [field: SerializeField] public int MaxStackableSize { get; set; } = 1;
     [field: SerializeField] public Sprite image { get; set; }
     [field: SerializeField] public string itemName { get; set; }
-    public int id=>GetInstanceID();
+    [field: SerializeField] public int id;//=>GetInstanceID();
     [field: SerializeField]
     [field: TextArea]
     public string description { get; set; }
