@@ -14,7 +14,7 @@ public class UIShopInventoryPage : UIInventoryPage
     [SerializeField] Button buyItemButton;
 
     InventoryItemData currentSelectedItem;
-    public event UnityAction<InventoryItemData> OnShopBuyButtonClicked;
+    public event UnityAction<InventoryItemData, int> OnShopBuyButtonClicked;
 
     protected override void OnDestroy()
     {
@@ -64,6 +64,6 @@ public class UIShopInventoryPage : UIInventoryPage
     public void BuyItemButtonPressed()
     {
         if (currentSelectedItem != null)
-            OnShopBuyButtonClicked?.Invoke(currentSelectedItem);
+            OnShopBuyButtonClicked?.Invoke(currentSelectedItem, 1);
     }
 }

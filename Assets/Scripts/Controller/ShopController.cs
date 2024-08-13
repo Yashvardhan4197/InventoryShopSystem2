@@ -12,12 +12,11 @@ public class ShopController : MonoBehaviour
     void Start()
     {
         shopinventorySO.Initialize();
-        shopinventoryPage.InitializeInventoryPage(shopinventorySO.InventoryItems);
-
-        shopinventoryPage.OnShopBuyButtonClicked += BuyItem;
-
         playerInventorySO.Initialize();
-        playerinventoryPage.InitializeInventoryPage(playerInventorySO.InventoryItems);
+
+        shopinventoryPage.InitializeInventoryPage(shopinventorySO.CurrentInventoryItems);
+        shopinventoryPage.OnShopBuyButtonClicked += BuyItem;
+        playerinventoryPage.InitializeInventoryPage(playerInventorySO.CurrentInventoryItems);
     }
 
     void OnDestroy()
@@ -25,21 +24,14 @@ public class ShopController : MonoBehaviour
         shopinventoryPage.OnShopBuyButtonClicked -= BuyItem;
     }
 
-    public void BuyItem(InventoryItemData itemData)
+    public void BuyItem(InventoryItemData itemData, int quantity)
     {
-        int newQuantity = itemData.Quantity;
-
-        //TODO:Understand this logic
-        //shopinventorySO.UpdateQuantity(itemData, itemData.quantity--);
-        //playerInventorySO.UpdateQuantity(itemData, itemData.quantity++);
-
-        shopinventorySO.UpdateQuantity(itemData, newQuantity--);
-        playerInventorySO.UpdateQuantity(itemData, newQuantity++);
+        shopinventorySO.UpdateQuantity(itemData, -1 * quantity);
+        playerInventorySO.UpdateQuantity(itemData, quantity);
     }
 
-    public void UseItem(InventoryItemData itemData)
-    {
-        int newQuantity = itemData.Quantity;
-        playerInventorySO.UpdateQuantity(itemData, newQuantity--);
+    public void UseItem(InventoryItemData itemData, int quantity)
+    { 
+        playerInventorySO.UpdateQuantity(itemData, -1 * quantity);
     }
 }
