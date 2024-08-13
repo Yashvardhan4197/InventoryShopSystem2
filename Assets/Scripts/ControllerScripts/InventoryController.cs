@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,17 +11,27 @@ public class InventoryController : MonoBehaviour
     [SerializeField]public InventorySO inventorySO;
 
     [SerializeField] public Button InventoryOpenButton;
-
+    [SerializeField]public List<InventoryItemData> StartingInventoryItems;
 
     private bool isOpened = false;
     private void Start()
     {
         InventoryOpenButton.onClick.AddListener(OpenInventory);
-        inventorySO.Initialize();
-        inventoryPage.InitializeItems(inventorySO.TotalSlots);
-        inventorySO.AddItem(inventorySO.StartingItem1, inventorySO.StartingItemAmount1);
-        inventorySO.AddItem(inventorySO.StartingItem2, inventorySO.StartingItemAmount2);
+        inventorySO.Initialize_1();
+        inventoryPage.InitializeItems(inventorySO.GetInventoryItemData_1());
+        InitializeStartingItems();
+        //inventorySO.AddItem_1(inventorySO.StartingItem1, inventorySO.StartingItemAmount1);
+        //inventorySO.AddItem_1(inventorySO.StartingItem2, inventorySO.StartingItemAmount2);
         //inventorySO.AddItem(inventorySO.StartingItem3,inventorySO.StartingItemAmount3);
+        inventoryPage.UpdateInventory(inventorySO.GetInventoryItemData_1());
+    }
+
+    private void InitializeStartingItems()
+    {
+        foreach (var item in inventorySO.startingElements_1)
+        {
+            inventorySO.AddItem_1(item.item,item.quantity);
+        }
     }
 
     private void Update()
@@ -34,11 +45,11 @@ public class InventoryController : MonoBehaviour
 
     public void ButtonPressInfo(int itemID)
     {
-        foreach (var item in inventorySO.GetInventoryItemData())
+        foreach (InventoryItemData item in inventorySO.GetInventoryItemData_1())
         {
-            if (item.Key == itemID)
+            if (item.itemID == itemID)
             {
-                inventoryDescription.SetDescription(item.Key,item.Value.item.image, item.Value.item.name, item.Value.item.description);
+                inventoryDescription.SetDescription(item);
             }
         }
     }
@@ -47,11 +58,7 @@ public class InventoryController : MonoBehaviour
         if(!isOpened)
         {
             inventoryPage.Show();
-            foreach (var item in inventorySO.GetInventoryItemData())
-            {
-                Debug.Log("item Name: " + item.Value.item.name);
-                inventoryPage.UpdateInventory(item.Key, item.Value.item.image, item.Value.quantity);
-            }
+            inventoryPage.UpdateInventory(inventorySO.GetInventoryItemData_1());
 
             isOpened = true;
         }
@@ -62,24 +69,24 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    public void UseItemButtonPressed(int id)
+    public void UseItemButtonPressed(InventoryItemData inventoryItemData)
     {
-        foreach (var item in inventorySO.GetInventoryItemData())
+        foreach (var item in inventorySO.GetInventoryItemData_1())
         {
-            if (item.Key == id)
+            if (item == inventoryItemData)
             {
-                int changedValue=item.Value.quantity;
+                int changedValue=item.quantity;
                 changedValue--;
-                item.Value.ChangeQuantity(changedValue);
+                item.ChangeQuantity(changedValue);
                 //Debug.Log("Hello Again" + item.Value.quantity);
                 if (changedValue <= 0)
                 {
-                    item.Value.ResetItemSlot();
-                    inventoryPage.UpdateInventory(id,inventoryPage.DefaultItem.defaultSprite,0);
+                    item.ResetItemSlot();
+                    inventoryPage.UpdateInventory(inventorySO.GetInventoryItemData_1());
                 }
                 else
                 {
-                    inventoryPage.UpdateInventory(id, item.Value.item.image, item.Value.quantity);
+                    inventoryPage.UpdateInventory(inventorySO.GetInventoryItemData_1());
                 }
                 return;
             }
@@ -87,14 +94,7 @@ public class InventoryController : MonoBehaviour
         
     }
 
-    public void UpdateFullInventory()
-    {
-        foreach (var item in inventorySO.GetInventoryItemData())
-        {
-            //Debug.Log("ItemsUpdated");
-            inventoryPage.UpdateInventory(item.Key, item.Value.item.image, item.Value.quantity);
-        }
-    }
+    
     
 
 }

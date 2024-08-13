@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,19 +10,21 @@ public class ShopUIInventoryPage : MonoBehaviour
     [SerializeField] public ShopUIInventoryDescription InventoryDescription;
     [SerializeField] public RectTransform controlPanel;
     [SerializeField] public ShopInventoryController shopinventoryController;
-    public Dictionary<int, InventoryItem> ItemList = new Dictionary<int, InventoryItem>();
+   // public Dictionary<int, InventoryItem> ItemList = new Dictionary<int, InventoryItem>();
 
-    // public List<InventoryItem> ListOfItems=new List<InventoryItem>();
+    public List<InventoryItem> ItemList=new List<InventoryItem>();
 
 
-    public void InitializeItems(int totalElements)
+    public void Initialize_Items(List<InventoryItemData> itemList)
     {
-        for (int i = 0; i < totalElements; i++)
+        
+
+        foreach (InventoryItemData item in itemList)
         {
             InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
             newItem.transform.SetParent(controlPanel);
-            newItem.inventoryitemID = shopinventoryController.ShopinventorySO.inventoryItemData[i].uniqueID;
-            ItemList.Add(i, newItem);
+            newItem.SetData(item);
+            ItemList.Add(newItem);
             newItem.OnButtonPressed += OnInventoryItemButtonPressed;
         }
     }
@@ -38,14 +41,13 @@ public class ShopUIInventoryPage : MonoBehaviour
             newItem.OnButtonPressed += OnInventoryItemButtonPressed;
         }
     }*/
-
-    public void OnInventoryItemButtonPressed(int itemID)
+    public void OnInventoryItemButtonPressed(InventoryItemData inventoryItemData)
     {
-        foreach (var item in shopinventoryController.ShopinventorySO.GetInventoryItemData())
+        foreach (var item in shopinventoryController.ShopinventorySO.GetInventoryItemData_1())
         {
-            if (item.Key == itemID)
+            if (item == inventoryItemData)
             {
-                shopinventoryController.ShopinventoryDescription.SetDescription(item.Key, item.Value.item.image, item.Value.item.name, item.Value.item.description);
+                shopinventoryController.ShopinventoryDescription.SetDescription(inventoryItemData);
             }
         }
         //inventoryController.ButtonPressInfo(itemID);
@@ -73,15 +75,39 @@ public class ShopUIInventoryPage : MonoBehaviour
 
     }*/
 
-    public void UpdateInventory(int itemID, Sprite itemImage, int amount)
+    public void UpdateInventory(List<InventoryItemData> inventoryItemDatas)
     {
-        foreach (var item in ItemList)
+        foreach (InventoryItemData item in inventoryItemDatas)
         {
-            if (item.Value.inventoryitemID == itemID)
+            int i = 0;
+            foreach (InventoryItem item1 in ItemList)
+                if (item == item1.inventoryItemData)
+                {
+                    item1.SetData(item);
+                    i = 1;
+                    break;
+                }
+            if (i == 0)
             {
-                item.Value.SetData(itemID, itemImage, amount);
-                break;
+                AddNewItem(item);
             }
         }
+
+        foreach (InventoryItem item in ItemList)
+        {
+            if (!inventoryItemDatas.Contains(item.inventoryItemData))
+            {
+                ItemList.Remove(item);
+            }
+        }
+    }
+
+    private void AddNewItem(InventoryItemData item)
+    {
+        InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
+        newItem.transform.SetParent(controlPanel);
+        newItem.inventoryItemData = item;
+        ItemList.Add(newItem);
+        newItem.OnButtonPressed += OnInventoryItemButtonPressed;
     }
 }

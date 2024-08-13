@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class UIInventoryPage : MonoBehaviour
 {
@@ -9,19 +10,21 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] public RectTransform controlPanel;
     [SerializeField]public InventoryController inventoryController;
 
-    public Dictionary<int,InventoryItem> ItemList = new Dictionary<int,InventoryItem>();
+    //public Dictionary<int,InventoryItem> ItemList = new Dictionary<int,InventoryItem>();
     
-   // public List<InventoryItem> ListOfItems=new List<InventoryItem>();
+   public List<InventoryItem> ItemList=new List<InventoryItem>();
 
  
-    public void InitializeItems(int totalElements)
+    public void InitializeItems(List<InventoryItemData>inventoryItemDatas)
     {
-        for (int i = 0; i < totalElements; i++)
+        Debug.Log("Hello again");
+        foreach (InventoryItemData item in inventoryItemDatas)
         {
+            
             InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
             newItem.transform.SetParent(controlPanel);
-            newItem.inventoryitemID =i;
-            ItemList.Add(i,newItem);
+            newItem.inventoryItemData =item;
+            ItemList.Add(newItem);
             newItem.OnButtonPressed += OnInventoryItemButtonPressed;
         }
     }
@@ -39,13 +42,13 @@ public class UIInventoryPage : MonoBehaviour
         }
     }*/
 
-    public void OnInventoryItemButtonPressed(int itemID)
+    public void OnInventoryItemButtonPressed(InventoryItemData itemID)
     {
-        foreach (var item in inventoryController.inventorySO.GetInventoryItemData())
+        foreach (var item in inventoryController.inventorySO.GetInventoryItemData_1())
         {
-            if (item.Key == itemID)
+            if (item == itemID)
             {
-                inventoryController.inventoryDescription.SetDescription(item.Key, item.Value.item.image, item.Value.item.name, item.Value.item.description);
+                inventoryController.inventoryDescription.SetDescription(item);
             }
         }
         //inventoryController.ButtonPressInfo(itemID);
@@ -73,18 +76,39 @@ public class UIInventoryPage : MonoBehaviour
 
     }*/
 
-    public void UpdateInventory(int itemID,Sprite itemImage,int amount)
+    public void UpdateInventory(List<InventoryItemData> inventoryItemDatas)
     {
-        foreach (var item in ItemList)
+       foreach(InventoryItemData item in inventoryItemDatas)
         {
-            if (item.Value.inventoryitemID == itemID)
+            int i = 0;
+            foreach(InventoryItem item1 in ItemList)
+                if (item == item1.inventoryItemData)
+                {
+                    item1.SetData(item);
+                    i = 1;
+                    break;
+                }
+            if(i == 0)
             {
-                Debug.Log("Updating Inventory");
-                item.Value.SetData(itemID, itemImage, amount);
-                break;
+                AddNewItem(item);
+            }
+        }
+
+       foreach(InventoryItem item in ItemList)
+        {
+            if (!inventoryItemDatas.Contains(item.inventoryItemData))
+            {
+                ItemList.Remove(item);
             }
         }
     }
-
+    private void AddNewItem(InventoryItemData item)
+    {
+        InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
+        newItem.transform.SetParent(controlPanel);
+        newItem.inventoryItemData = item;
+        ItemList.Add(newItem);
+        newItem.OnButtonPressed += OnInventoryItemButtonPressed;
+    }
 
 }

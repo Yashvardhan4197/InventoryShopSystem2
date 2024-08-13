@@ -8,7 +8,9 @@ using UnityEngine.UI;
 
 public class UIInventoryDescription : MonoBehaviour
 {
-    private int id;
+    //private int id;
+    private InventoryItemData inventoryItemData;
+    
     [SerializeField] Image Image;
     [SerializeField] TextMeshProUGUI Title;
     [SerializeField] TextMeshProUGUI Description;
@@ -20,17 +22,17 @@ public class UIInventoryDescription : MonoBehaviour
         ResetDescription();
         UseItemButton.onClick.AddListener(UseItem);
     }
-    public void SetDescription(int id,Sprite Image, string Title,string Desc)
+    public void SetDescription(InventoryItemData currentItem)
     {
-        this.id =id;
+        inventoryItemData =currentItem;
         this.Description.gameObject.SetActive(true);
         this.Image.gameObject.SetActive(true);
         this.Title.gameObject.SetActive(true);
 
 
-        this.Image.sprite = Image;
-        this.Title.text = Title;
-        this.Description.text = Desc;
+        this.Image.sprite = currentItem.item.image;
+        this.Title.text = currentItem.item.name;
+        this.Description.text = currentItem.item.description;
     }
     public void ResetDescription()
     {
@@ -41,7 +43,7 @@ public class UIInventoryDescription : MonoBehaviour
 
     public void UseItem()
     {
-        inventoryController.UseItemButtonPressed(id);
+        inventoryController.UseItemButtonPressed(inventoryItemData);
         /*
         foreach (var item in inventoryController.inventorySO.GetInventoryItemData())
         {

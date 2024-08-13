@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5ce011d26585924eadc1461e173ae45, type: 3}
   m_Name: ShopInventory
   m_EditorClassIdentifier: 
-  <TotalSlots>k__BackingField: 5
-  StartingItem1: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
-  StartingItem2: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
-  StartingItem3: {fileID: 11400000, guid: 4ee18a0a8e3f21d4ba2091f5e767559b, type: 2}
-  StartingItemAmount1: 1
-  StartingItemAmount2: 2
-  StartingItemAmount3: 5
+  inventoryItemData_1:
+  - item: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
+    quantity: 5
+    itemID: 1
+  - item: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
+    quantity: 3
+    itemID: 2
+  startingElements_1:
+  - item: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
+    quantity: 5
+  - item: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
+    quantity: 3

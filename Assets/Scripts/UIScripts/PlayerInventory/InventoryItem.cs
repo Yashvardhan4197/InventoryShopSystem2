@@ -5,25 +5,26 @@ using UnityEngine.Events;
 public class InventoryItem : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI Amount;
-    [SerializeField] public int inventoryitemID;
+    //[SerializeField] int inventoryitemID;
     [SerializeField] public Image ItemImage;
     [SerializeField] public Button ItemButton;
 
     [SerializeField] public Sprite defaultSprite;
     public bool isEmpty = false;
 
-    public event UnityAction<int> OnButtonPressed;
-    public void SetData(int id,Sprite image,int amount)
+    public InventoryItemData inventoryItemData;
+    public event UnityAction<InventoryItemData> OnButtonPressed;
+    public void SetData(InventoryItemData inventoryItem)
     {
-        inventoryitemID = id;
+        inventoryItemData = inventoryItem;
         ItemImage.gameObject.SetActive(true);
-        ItemImage.sprite=image;
-        Amount.text = amount.ToString();
+        ItemImage.sprite = inventoryItem.item.image;
+        Amount.text = inventoryItem.quantity.ToString();
         isEmpty = false;
     }
 
-    
-    
+
+
     private void Awake()
     {
         ItemImage.gameObject.SetActive(true);
@@ -32,7 +33,7 @@ public class InventoryItem : MonoBehaviour
     }
     private void ButtonPressed()
     {
-        OnButtonPressed?.Invoke(inventoryitemID);
+        OnButtonPressed?.Invoke(inventoryItemData);
         //InventoryController.Instance.ButtonPressInfo(inventoryitemID);
     }
 }

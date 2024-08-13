@@ -18,11 +18,16 @@ public class ShopInventoryController : MonoBehaviour
     private void Start()
     {
         ShopInventoryOpenButton.onClick.AddListener(OpenInventory);
-        ShopinventorySO.Initialize();
-        ShopinventoryPage.InitializeItems(ShopinventorySO.TotalSlots);
-        ShopinventorySO.AddItem(ShopinventorySO.StartingItem1, ShopinventorySO.StartingItemAmount1);
-        ShopinventorySO.AddItem(ShopinventorySO.StartingItem2, ShopinventorySO.StartingItemAmount2);
-        //inventorySO.AddItem(inventorySO.StartingItem3,inventorySO.StartingItemAmount3);
+        ShopinventorySO.Initialize_1();
+        ShopinventoryPage.Initialize_Items(ShopinventorySO.GetInventoryItemData_1());
+        InitializeStartingItems();
+    }
+    private void InitializeStartingItems()
+    {
+        foreach (var item in ShopinventorySO.startingElements_1)
+        {
+            ShopinventorySO.AddItem_1(item.item, item.quantity);
+        }
     }
     private void Update()
     {
@@ -38,11 +43,7 @@ public class ShopInventoryController : MonoBehaviour
         if (!isOpened)
         {
             ShopinventoryPage.Show();
-            foreach (var item in ShopinventorySO.GetInventoryItemData())
-            {
-                //Debug.Log("item Name: " + item.Value.item.name);
-                ShopinventoryPage.UpdateInventory(item.Key, item.Value.item.image, item.Value.quantity);
-            }
+            ShopinventoryPage.UpdateInventory(ShopinventorySO.GetInventoryItemData_1());
 
             isOpened = true;
         }
@@ -52,28 +53,23 @@ public class ShopInventoryController : MonoBehaviour
             isOpened = false;
         }
     }
-    public void Buyitem(int itemID)
+    public void Buyitem(InventoryItemData inventoryItemData)
     {
-        foreach (var item in ShopinventorySO.GetInventoryItemData())
+        foreach (var item in ShopinventorySO.GetInventoryItemData_1())
         {
-            if (itemID == item.Value.itemID)
+            if (inventoryItemData == item)
             {
-                Debug.Log("kuch kuch hota hai");
-                int changedValue = item.Value.quantity;
+                int changedValue = item.quantity;
                 changedValue--;
-                item.Value.ChangeQuantity(changedValue);
+                item.ChangeQuantity(changedValue);
                 if (changedValue <= 0)
                 {
-                    item.Value.ResetItemSlot();
-                    ShopinventoryPage.UpdateInventory(itemID, ShopinventoryPage.DefaultItem.defaultSprite, 0);
+                    item.ResetItemSlot();
                 }
-                else
-                {
-                    ShopinventoryPage.UpdateInventory(itemID, item.Value.item.image, item.Value.quantity);
-                }
+                ShopinventoryPage.UpdateInventory(ShopinventorySO.GetInventoryItemData_1());
 
-                playerInventoryController.inventorySO.IncrementItemQuantity(item.Value.item);
-                playerInventoryController.UpdateFullInventory();
+                playerInventoryController.inventorySO.AddItem_1(item.item);
+                //playerInventoryController.UpdateFullInventory();
 
             }
         }

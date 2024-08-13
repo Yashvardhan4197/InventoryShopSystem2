@@ -7,98 +7,76 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="newInventory",menuName ="ScriptableObjects/newInventory")]
 public class InventorySO : ScriptableObject
 {
-    public Dictionary<int,InventoryItemData> inventoryItemData;
-    [field: SerializeField]public int TotalSlots { get; private set; }
 
-    [SerializeField] public ItemSO StartingItem1;
-    [SerializeField] public ItemSO StartingItem2;
-    [SerializeField] public ItemSO StartingItem3;
-    [SerializeField] public int StartingItemAmount1;
-    [SerializeField] public int StartingItemAmount2;
-    [SerializeField] public int StartingItemAmount3;
-
-
-
-    public void Initialize()
+    public List<InventoryItemData> inventoryItemData_1;
+    public List<StartingElements> startingElements_1;
+    
+    public void Initialize_1()
     {
-        inventoryItemData = new Dictionary<int,InventoryItemData>();
-        for(int i=0;i<TotalSlots; i++)
+        inventoryItemData_1 = new List<InventoryItemData>();
+    }
+
+   
+
+    public void AddItem_1(ItemSO item,int quantity)
+    {
+        foreach (var itemData in inventoryItemData_1)
         {
-            InventoryItemData newItemData = InventoryItemData.GetEmptyItem();
-            newItemData.uniqueID = i;
-            inventoryItemData.Add(newItemData.uniqueID,newItemData);
+            if (itemData.itemID != -1 && itemData.item == item)
+            {
+                if (itemData.item.isStackable == true)
+                {
+                    itemData.ChangeQuantity(quantity);
+                }
+                return;
+            }
         }
+        InventoryItemData newItem=new InventoryItemData(item,quantity);
+        inventoryItemData_1.Add(newItem);
         
     }
-    public void AddItem(ItemSO item, int quantity)
+
+    public void AddItem_1(ItemSO item)
     {
-        //Debug.Log("Added Item");
-        foreach(var itemData in inventoryItemData)
+        foreach (var itemData in inventoryItemData_1)
         {
-            if (itemData.Value.itemID != -1 && itemData.Value.item==item)
+            if (itemData.itemID != -1 && itemData.item == item)
             {
-                if (itemData.Value.item.isStackable == true)
+                if (itemData.item.isStackable == true)
                 {
-                    itemData.Value.ChangeQuantity(quantity);
+                    itemData.ChangeQuantity(itemData.quantity+1);
                 }
                 return;
             }
         }
-        foreach (var itemData in inventoryItemData)
-        {       
-            if (itemData.Value.isEmpty())
-            {
-                itemData.Value.item = item;
-                if(itemData.Value.quantity>1) { 
-                }
-                itemData.Value.ChangeQuantity(quantity);
-                itemData.Value.SetItemID();
-                break;
-            }
-        }
+        InventoryItemData newItem = new InventoryItemData(item,1);
+        inventoryItemData_1.Add(newItem);
     }
 
-    public void IncrementItemQuantity(ItemSO item)
+    
+    public List<InventoryItemData> GetInventoryItemData_1()
     {
-        foreach (var itemData in inventoryItemData)
+        List<InventoryItemData>returnValue= new List<InventoryItemData>();
+        List<InventoryItemData>toDelete= new List<InventoryItemData>();
+        foreach (var item in inventoryItemData_1)
         {
-            if (itemData.Value.itemID != -1 && itemData.Value.item == item)
+            if (!item.isEmpty())
             {
-                if (itemData.Value.item.isStackable == true)
-                {
-                    itemData.Value.ChangeQuantity(itemData.Value.quantity+1);
-                }
-                return;
-            }
-        }
-        foreach (var itemData in inventoryItemData)
-        {
-            if (itemData.Value.isEmpty())
-            {
-                itemData.Value.item = item;
-                if (itemData.Value.quantity > 1)
-                {
-                }
-                itemData.Value.ChangeQuantity(itemData.Value.quantity + 1);
-                itemData.Value.SetItemID();
-                break;
-            }
-        }
-    }
-    public Dictionary<int, InventoryItemData> GetInventoryItemData()
-    {
-        Dictionary<int, InventoryItemData> returnValue = new Dictionary<int, InventoryItemData>();
+                returnValue.Add(item);
 
-        foreach (var item in inventoryItemData)
-        {
-            if (!item.Value.isEmpty())
-            {
-                returnValue.Add(item.Key, item.Value);
-                
             }
+            else
+            {
+                toDelete.Add(item);
+            }
+        }
+        foreach (var item in toDelete)
+        {
+            inventoryItemData_1.Remove(item);
         }
         return returnValue;
     }
+
 
 }
 
@@ -109,8 +87,6 @@ public class InventoryItemData
     public ItemSO item;
     public int quantity;
     public int itemID=-1;
-    public int uniqueID;
-   // private int idcounter = 0;
     public InventoryItemData(ItemSO item,int quantity)
     {
         this.item = item;
@@ -151,11 +127,25 @@ public class InventoryItemData
         item = null;
         itemID = -1;
         quantity = -1;
+
     }
 
     public static InventoryItemData GetEmptyItem()
     {
         InventoryItemData newItem=new InventoryItemData(null,0);
         return newItem;
+    }
+}
+
+[Serializable]
+public class StartingElements
+{
+    public ItemSO item;
+    public int quantity;
+
+    public StartingElements(ItemSO item, int quantity)
+    {
+        this.item = item;
+        this.quantity = quantity;
     }
 }

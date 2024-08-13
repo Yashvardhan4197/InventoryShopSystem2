@@ -16,4 +16,5 @@ MonoBehaviour:
   <MaxStackableSize>k__BackingField: 99
   <image>k__BackingField: {fileID: 21300000, guid: 60c1d42986dc0094c808b9e135f31ba2, type: 3}
   <itemName>k__BackingField: Grace
+  id: 1
   <description>k__BackingField: Will heal you
