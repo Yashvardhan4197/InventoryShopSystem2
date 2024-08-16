@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <isStackable>k__BackingField: 0
   <MaxStackableSize>k__BackingField: 1
-  <image>k__BackingField: {fileID: 21300000, guid: c0ea4b6e528e7fe4aa6cdc94d38691a1, type: 3}
+  <image>k__BackingField: {fileID: 21300000, guid: 8a5f9829a049c704fa992203bfc451f2, type: 3}
   <itemName>k__BackingField: Sword
-  id: 3
-  <description>k__BackingField: Will Cut you
-  rarity: Mid
-  MoneyAmount: 10
+  id: 4
+  <description>k__BackingField: Will Give you Shock
+  rarity: Advanced
+  MoneyAmount: 35

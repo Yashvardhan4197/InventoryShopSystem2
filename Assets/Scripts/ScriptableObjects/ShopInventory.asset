@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItemData_1:
   - item: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
-    quantity: 5
+    quantity: 3
     itemID: 1
   - item: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
     quantity: 3
@@ -23,4 +23,6 @@ MonoBehaviour:
   - item: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
     quantity: 5
   - item: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
+    quantity: 3
+  - item: {fileID: 11400000, guid: fa46988de9b3f7e49b0b94f1638d5b6e, type: 2}
     quantity: 3
