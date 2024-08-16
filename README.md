@@ -17,4 +17,5 @@ This project aims to recreate the an Inventory System using various design patte
 
 ### Video-Demonstration
 
+https://github.com/user-attachments/assets/aa03eebf-1117-4d15-9f85-cc9291061cd3
 
