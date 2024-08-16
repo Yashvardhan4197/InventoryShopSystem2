@@ -11,11 +11,12 @@ public class ItemSO : ScriptableObject
     [field: SerializeField] public Sprite image { get; set; }
     [field: SerializeField] public string itemName { get; set; }
     [field: SerializeField] public int id;//=>GetInstanceID();
-    [field: SerializeField]
+    [field: SerializeField] 
     [field: TextArea]
     public string description { get; set; }
-
-
+    [field: TextArea]
+    public string rarity;
+    [field: SerializeField]public int MoneyAmount;
     public void SetName(string name)
     {
         this.itemName = name;

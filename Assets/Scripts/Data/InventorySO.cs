@@ -24,10 +24,8 @@ public class InventorySO : ScriptableObject
         {
             if (itemData.itemID != -1 && itemData.item == item)
             {
-                if (itemData.item.isStackable == true)
-                {
+                
                     itemData.ChangeQuantity(quantity);
-                }
                 return;
             }
         }
@@ -40,12 +38,10 @@ public class InventorySO : ScriptableObject
     {
         foreach (var itemData in inventoryItemData_1)
         {
-            if (itemData.itemID != -1 && itemData.item == item)
+            if (itemData.itemID!=-1 && itemData.item == item)
             {
-                if (itemData.item.isStackable == true)
-                {
                     itemData.ChangeQuantity(itemData.quantity+1);
-                }
+
                 return;
             }
         }

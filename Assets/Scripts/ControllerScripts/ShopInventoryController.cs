@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ShopInventoryController : MonoBehaviour
 {
+    /*
     [SerializeField] public ShopUIInventoryDescription ShopinventoryDescription;
     [SerializeField] public ShopUIInventoryPage ShopinventoryPage;
     [SerializeField] public InventorySO ShopinventorySO;
@@ -74,4 +75,6 @@ public class ShopInventoryController : MonoBehaviour
             }
         }
     }
+
+   */
 }
