@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 
@@ -18,6 +19,12 @@ public class Inventory_Controller : MonoBehaviour
         playerInventoryPage.UseItemEvent += UseItemButtonPressed;
         shopInventoryPage.BuyItemEventSureBox += Buyitem;
         playerInventoryPage.SellItemEventSureBox += SellItemSurely;
+    }
+    private void OnDestroy()
+    {
+        playerInventoryPage.UseItemEvent-= UseItemButtonPressed;
+        shopInventoryPage.BuyItemEventSureBox-= Buyitem;
+        playerInventoryPage.SellItemEventSureBox-= SellItemSurely;
     }
     private void InitializeStartingItems()
     {
@@ -49,10 +56,11 @@ public class Inventory_Controller : MonoBehaviour
                 {
                     playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
                 }
+                SoundManager.Instance.PlaySound(Sound.Open);
                 return;
             }
         }
-        SoundManager.Instance.PlaySound(Sound.Open);
+        
 
     }
     public void Buyitem(InventoryItemData inventoryItemData,int amountToBuy)
@@ -87,7 +95,8 @@ public class Inventory_Controller : MonoBehaviour
             }
             if (inventoryItemData.quantity <= 0)
             {
-                shopInventoryPage.HideSureBox();
+                StartCoroutine(DelayShopSureBoxClosing());
+
             }
 
         }
@@ -109,9 +118,22 @@ public class Inventory_Controller : MonoBehaviour
             SoundManager.Instance.PlaySound(Sound.Accept);
             if (inventoryItemData.quantity <= 0)
             {
-                playerInventoryPage.HideSureBox();
+                StartCoroutine(DelayPlayerInventorySellButton());
             }
         }
     }
 
+    IEnumerator DelayShopSureBoxClosing()
+    {
+        shopInventoryPage.HideSureBoxButton();
+        yield return new WaitForSeconds(2f);
+        shopInventoryPage.HideSureBox();
+
+    }
+    IEnumerator DelayPlayerInventorySellButton()
+    {
+        playerInventoryPage.HideSureBoxButton();
+        yield return new WaitForSeconds(2f);
+        playerInventoryPage.HideSureBox();
+    }
 }

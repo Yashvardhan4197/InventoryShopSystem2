@@ -8,13 +8,7 @@ using UnityEngine.UI;
 public class UIPlayerInventoryPage : UIInventoryPage
 {
     [SerializeField] Button UseButton;
-    [SerializeField] Button SellButton;/*
-    [SerializeField] CanvasGroup SureBox;
-    [SerializeField] Button CloseSureBox;
-    [SerializeField] Button SurelySellButton;
-    [SerializeField] TextMeshProUGUI SureBoxText;
-    [SerializeField] TMP_InputField moneyText;
-    */
+    [SerializeField] Button SellButton;
     public UnityAction<InventoryItemData,int> SellItemEventSureBox;
     private void Start()
     {

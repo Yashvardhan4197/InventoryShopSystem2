@@ -173,6 +173,7 @@ public class UIInventoryPage : MonoBehaviour
         SureBox.alpha = 1;
         SureBox.interactable = true;
         SureBox.blocksRaycasts = true;
+        SurelySellButton.gameObject.SetActive(true);
     }
 
     
@@ -181,9 +182,14 @@ public class UIInventoryPage : MonoBehaviour
         SureBox.alpha = 0;
         SureBox.interactable = true;
         SureBox.blocksRaycasts = false;
+
     }
     public void CalculateAmount(int amount)
     {
         calculatedAmount.text = amount.ToString();
+    }
+    public void HideSureBoxButton()
+    {
+        SurelySellButton.gameObject.SetActive(false);
     }
 }

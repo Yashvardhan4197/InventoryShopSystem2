@@ -33,7 +33,6 @@ public class InventoryItem : MonoBehaviour
     }
     private void ButtonPressed()
     {
-        Debug.Log("Hello");
         OnButtonPressed?.Invoke(inventoryItemData);
         //InventoryController.Instance.ButtonPressInfo(inventoryitemID);
     }
