@@ -24,8 +24,7 @@ public class InventorySO : ScriptableObject
         {
             if (itemData.itemID != -1 && itemData.item == item)
             {
-                
-                    itemData.ChangeQuantity(quantity);
+                itemData.ChangeQuantity(itemData.quantity+quantity);
                 return;
             }
         }
@@ -48,8 +47,21 @@ public class InventorySO : ScriptableObject
         InventoryItemData newItem = new InventoryItemData(item,1);
         inventoryItemData_1.Add(newItem);
     }
+    public void AddItem_1(InventoryItemData item, int quantity)
+    {
+        foreach (var itemData in inventoryItemData_1)
+        {
+            if (itemData.itemID != -1 && itemData == item)
+            {
+                itemData.ChangeQuantity(itemData.quantity+quantity);
+                return;
+            }
+        }
+        inventoryItemData_1.Add(item);
 
-    
+
+    }
+
     public List<InventoryItemData> GetInventoryItemData_1()
     {
         List<InventoryItemData>returnValue= new List<InventoryItemData>();

@@ -7,7 +7,8 @@ public class Inventory_Controller : MonoBehaviour
 {
     [SerializeField] UIPlayerInventoryPage playerInventoryPage;
      [SerializeField] ShopUIInventoryPage  shopInventoryPage;
-    [SerializeField] InventorySO playerInventorySO,shopInventorySO;
+    [SerializeField] InventorySO playerInventorySO;
+     [SerializeField] InventorySO shopInventorySO;
 
     private void Start()
     {
@@ -69,30 +70,21 @@ public class Inventory_Controller : MonoBehaviour
         shopInventoryPage.CalculateAmount(totalMoneyToUpdate);
         if (amountToBuy <= inventoryItemData.quantity&&GameManager.Instance.GetMoneyAmount()>=totalMoneyToUpdate)
         {
-           
-            foreach (var item in shopInventorySO.GetInventoryItemData_1())
+            
+            int changedValue=inventoryItemData.quantity;
+            changedValue-=amountToBuy;
+            playerInventorySO.AddItem_1(inventoryItemData.item, amountToBuy);
+            inventoryItemData.ChangeQuantity(changedValue);
+            if(changedValue <= 0)
             {
-                if (inventoryItemData == item)
-                {
-                    
-                    int changedValue = item.quantity;
-                    changedValue-=amountToBuy;
-                    item.ChangeQuantity(changedValue);
-                    if (changedValue <= 0)
-                    {
-                        item.ResetItemSlot();
-                    }
-                    shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
-
-                    playerInventorySO.AddItem_1(item.item,amountToBuy);
-                    playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
-                    GameManager.Instance.SetMoneyAmount(GameManager.Instance.GetMoneyAmount()-totalMoneyToUpdate);
-                    SoundManager.Instance.PlaySound(Sound.Accept);
-                    break;
-                    //playerInventoryController.UpdateFullInventory();
-
-                }
+                inventoryItemData.ResetItemSlot();
             }
+            shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
+            playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
+            GameManager.Instance.SetMoneyAmount(GameManager.Instance.GetMoneyAmount() - totalMoneyToUpdate);
+            SoundManager.Instance.PlaySound(Sound.Accept);
+
+
             if (inventoryItemData.quantity <= 0)
             {
                 StartCoroutine(DelayShopSureBoxClosing());
@@ -120,6 +112,8 @@ public class Inventory_Controller : MonoBehaviour
             {
                 StartCoroutine(DelayPlayerInventorySellButton());
             }
+            shopInventorySO.AddItem_1(inventoryItemData.item, amountToSell);
+            shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
         }
     }
 
