@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232457e6f3bf615418fe88ad51877ccd, type: 3}
   m_Name: Grace
   m_EditorClassIdentifier: 
-  <isStackable>k__BackingField: 1
-  <MaxStackableSize>k__BackingField: 99
-  <image>k__BackingField: {fileID: 21300000, guid: 2d089513ae4adfc48a683c362ad9992c, type: 3}
-  <itemName>k__BackingField: Grace
+  image: {fileID: 21300000, guid: 2d089513ae4adfc48a683c362ad9992c, type: 3}
+  itemName: Grace
   id: 1
-  <description>k__BackingField: Will heal you
+  description: Will Heal you
   rarity: Easy
   MoneyAmount: 50

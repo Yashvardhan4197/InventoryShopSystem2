@@ -252,17 +252,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &96695017 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5385738946333738278, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
-  m_PrefabInstance: {fileID: 2896403183343893097}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &110336821
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +261,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 110336822}
-  - component: {fileID: 110336824}
   - component: {fileID: 110336825}
   m_Layer: 0
   m_Name: PlayerController
@@ -296,18 +284,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &110336824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 110336821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71297771ffe9aad42ac2c68707a55998, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &110336825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInventoryPage: {fileID: 1755744517}
   shopInventoryPage: {fileID: 2093200996}
-  playerInventorySO: {fileID: 11400000, guid: d0eb80f852121e447be88e996e6cab5e, type: 2}
+  playerInventoryModel: {fileID: 11400000, guid: d0eb80f852121e447be88e996e6cab5e, type: 2}
   shopInventorySO: {fileID: 11400000, guid: 9edf32a3e87b8e54594fc7dd5feb3bad, type: 2}
 --- !u!224 &128775051 stripped
 RectTransform:
@@ -1889,10 +1865,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1925405724}
-  - component: {fileID: 1925405726}
   - component: {fileID: 1925405725}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1922,32 +1897,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1925405723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da7bba7d9840f3c44aa1f100792af2a9, type: 3}
+  m_Script: {fileID: 11500000, guid: e3d12eb4a3cd25046bde5e4b150a63fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moneyManagerUI: {fileID: 1942763724}
   SoundSFX: {fileID: 1487515951}
   soundTypes:
   - sound: 1
-    clip: {fileID: 8300000, guid: 9adf7ab8c1f24a9408911d3d99b09d4e, type: 3}
+    clip: {fileID: 8300000, guid: 10a01f8f13d44ef4197380dfc05c15db, type: 3}
   - sound: 0
-    clip: {fileID: 8300000, guid: e07fbe41922075d4fb9723fc1fbbbe6b, type: 3}
+    clip: {fileID: 8300000, guid: 04413df67ceb74e4a8780df4de282317, type: 3}
   - sound: 2
-    clip: {fileID: 8300000, guid: 5c4b13fe0f264a54c923aac3a87f8b45, type: 3}
+    clip: {fileID: 8300000, guid: c19574cbbe9cceb4b984563b47b0be04, type: 3}
   - sound: 3
-    clip: {fileID: 8300000, guid: 56f382449bbe0c34bb55e9b9c60bbfe3, type: 3}
---- !u!114 &1925405726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1925405723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7543343069809d49ae1d028e3160d78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerManagerUI: {fileID: 1942763724}
+    clip: {fileID: 8300000, guid: d86c0f9f0183e804aac69590fe9d5007, type: 3}
 --- !u!114 &1927933991 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
@@ -1970,7 +1933,7 @@ GameObject:
   - component: {fileID: 1942763723}
   - component: {fileID: 1942763724}
   m_Layer: 5
-  m_Name: PlayerUI
+  m_Name: MoneySection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2089,7 +2052,6 @@ MonoBehaviour:
   moneyText: {fileID: 2067529340}
   calculatedAmount: {fileID: 25379084}
   BuyItemButton: {fileID: 1868474774}
-  SellItemButton: {fileID: 96695017}
 --- !u!114 &2118416808 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6610315682585808862, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
@@ -2883,27 +2845,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 392.15607
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 41.782852
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 216.07803
       objectReference: {fileID: 0}
     - target: {fileID: 5984070874276480325, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -823.1085
       objectReference: {fileID: 0}
     - target: {fileID: 6104322430279804296, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2975,6 +2937,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6912436923036958554, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371293275945076323, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7441757421242888294, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}

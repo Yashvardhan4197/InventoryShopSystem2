@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232457e6f3bf615418fe88ad51877ccd, type: 3}
   m_Name: LightningSpell
   m_EditorClassIdentifier: 
-  <isStackable>k__BackingField: 0
-  <MaxStackableSize>k__BackingField: 1
-  <image>k__BackingField: {fileID: 21300000, guid: 8a5f9829a049c704fa992203bfc451f2, type: 3}
-  <itemName>k__BackingField: Sword
+  image: {fileID: 21300000, guid: 8a5f9829a049c704fa992203bfc451f2, type: 3}
+  itemName: Lightning Spell
   id: 4
-  <description>k__BackingField: Will Give you Shock
+  description: Will ThunderSlap you
   rarity: Advanced
-  MoneyAmount: 35
+  MoneyAmount: 2
