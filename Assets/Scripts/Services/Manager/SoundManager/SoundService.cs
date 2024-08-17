@@ -1,12 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SoundManager : GenericMonoSingleton<SoundManager>
+public class SoundService
 {
-    [SerializeField] AudioSource SoundSFX;
-    [SerializeField] SoundTypes[] soundTypes;
+    private AudioSource SoundSFX;
+    private SoundTypes[] soundTypes;
+
+    public SoundService(AudioSource audioSource, SoundTypes[] soundTypes) 
+    {
+        SoundSFX = audioSource;
+        this.soundTypes = soundTypes;
+    }
     public void PlaySound(Sound sound)
     {
         AudioClip clip = GetAudioClip(sound);
@@ -26,11 +30,4 @@ public class SoundManager : GenericMonoSingleton<SoundManager>
         return null;
     }
 }
-[Serializable]
-public class SoundTypes
-{
-    public Sound sound;
-    public AudioClip clip;
-}
 
-public enum Sound { Deny,Accept,Open,Close}

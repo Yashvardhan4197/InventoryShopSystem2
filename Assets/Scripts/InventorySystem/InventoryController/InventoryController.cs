@@ -3,19 +3,19 @@ using System.Collections;
 using UnityEngine;
 
 
-public class Inventory_Controller : MonoBehaviour
+public class InventoryController : MonoBehaviour
 {
-    [SerializeField] UIPlayerInventoryPage playerInventoryPage;
-     [SerializeField] ShopUIInventoryPage  shopInventoryPage;
-    [SerializeField] InventorySO playerInventorySO;
-     [SerializeField] InventorySO shopInventorySO;
+    [SerializeField] private PlayerInventoryViewUI playerInventoryPage;
+    [SerializeField] private ShopInventoryViewUI  shopInventoryPage;
+    [SerializeField] private InventoryModel playerInventoryModel;
+    [SerializeField] private InventoryModel shopInventorySO;
 
     private void Start()
     {
-        playerInventorySO.Initialize_1();
-        shopInventorySO.Initialize_1();
+        playerInventoryModel.Initialize();
+        shopInventorySO.Initialize();
         InitializeStartingItems();
-        playerInventoryPage.InitializeItems(playerInventorySO.GetInventoryItemData_1());
+        playerInventoryPage.InitializeItems(playerInventoryModel.GetInventoryItemData_1());
         shopInventoryPage.InitializeItems(shopInventorySO.GetInventoryItemData_1());
         playerInventoryPage.UseItemEvent += UseItemButtonPressed;
         shopInventoryPage.BuyItemEventSureBox += Buyitem;
@@ -29,19 +29,19 @@ public class Inventory_Controller : MonoBehaviour
     }
     private void InitializeStartingItems()
     {
-        foreach (var item in playerInventorySO.startingElements_1)
+        foreach (var item in playerInventoryModel.GetStartingItemData())
         {
-            playerInventorySO.AddItem_1(item.item, item.quantity);
+            playerInventoryModel.AddItem(item.item, item.quantity);
         }
-        foreach(var item in shopInventorySO.startingElements_1)
+        foreach(var item in shopInventorySO.GetStartingItemData())
         {
-            shopInventorySO.AddItem_1(item.item,item.quantity);
+            shopInventorySO.AddItem(item.item,item.quantity);
         }
     }
 
     public void UseItemButtonPressed(InventoryItemData inventoryItemData)
     {
-        foreach (var item in playerInventorySO.GetInventoryItemData_1())
+        foreach (var item in playerInventoryModel.GetInventoryItemData_1())
         {
             if (item == inventoryItemData)
             {
@@ -51,13 +51,13 @@ public class Inventory_Controller : MonoBehaviour
                 if (changedValue <= 0)
                 {
                     item.ResetItemSlot();
-                    playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
+                    playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
                 }
                 else
                 {
-                    playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
+                    playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
                 }
-                SoundManager.Instance.PlaySound(Sound.Open);
+                GameService.Instance.SoundService.PlaySound(Sound.Open);
                 return;
             }
         }
@@ -68,21 +68,21 @@ public class Inventory_Controller : MonoBehaviour
     {
         int totalMoneyToUpdate = amountToBuy * inventoryItemData.item.MoneyAmount;
         shopInventoryPage.CalculateAmount(totalMoneyToUpdate);
-        if (amountToBuy <= inventoryItemData.quantity&&GameManager.Instance.GetMoneyAmount()>=totalMoneyToUpdate)
+        if (amountToBuy <= inventoryItemData.quantity&&GameService.Instance.MoneyService.GetMoneyAmount()>=totalMoneyToUpdate)
         {
             
             int changedValue=inventoryItemData.quantity;
             changedValue-=amountToBuy;
-            playerInventorySO.AddItem_1(inventoryItemData.item, amountToBuy);
+            playerInventoryModel.AddItem(inventoryItemData.item, amountToBuy);
             inventoryItemData.ChangeQuantity(changedValue);
             if(changedValue <= 0)
             {
                 inventoryItemData.ResetItemSlot();
             }
             shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
-            playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
-            GameManager.Instance.SetMoneyAmount(GameManager.Instance.GetMoneyAmount() - totalMoneyToUpdate);
-            SoundManager.Instance.PlaySound(Sound.Accept);
+            playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
+            GameService.Instance.MoneyService.SetMoneyAmount(GameService.Instance.MoneyService.GetMoneyAmount() - totalMoneyToUpdate);
+            GameService.Instance.SoundService.PlaySound(Sound.Accept);
 
 
             if (inventoryItemData.quantity <= 0)
@@ -94,37 +94,40 @@ public class Inventory_Controller : MonoBehaviour
         }
         else
         {
-            SoundManager.Instance.PlaySound(Sound.Deny);
+            GameService.Instance.SoundService.PlaySound(Sound.Deny);
         }
     }
     public void SellItemSurely(InventoryItemData inventoryItemData,int amountToSell)
     {
-        //GameManager.Instance.money+=inventoryItemData.item.money
         if(amountToSell<=inventoryItemData.quantity)
         {
             int totalMoneyToUpdate = amountToSell * inventoryItemData.item.MoneyAmount;
             playerInventoryPage.CalculateAmount(totalMoneyToUpdate);
-            GameManager.Instance.SetMoneyAmount(GameManager.Instance.GetMoneyAmount()+totalMoneyToUpdate);
+            GameService.Instance.MoneyService.SetMoneyAmount(GameService.Instance.MoneyService.GetMoneyAmount()+totalMoneyToUpdate);
             inventoryItemData.ChangeQuantity(inventoryItemData.quantity - amountToSell);
-            playerInventoryPage.UpdateInventory(playerInventorySO.GetInventoryItemData_1());
-            SoundManager.Instance.PlaySound(Sound.Accept);
+            playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
+            GameService.Instance.SoundService.PlaySound(Sound.Accept);
             if (inventoryItemData.quantity <= 0)
             {
                 StartCoroutine(DelayPlayerInventorySellButton());
             }
-            shopInventorySO.AddItem_1(inventoryItemData.item, amountToSell);
+            shopInventorySO.AddItem(inventoryItemData.item, amountToSell);
             shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
+        }
+        else
+        {
+            GameService.Instance.SoundService.PlaySound(Sound.Deny);
         }
     }
 
-    IEnumerator DelayShopSureBoxClosing()
+    private IEnumerator DelayShopSureBoxClosing()
     {
         shopInventoryPage.HideSureBoxButton();
         yield return new WaitForSeconds(2f);
         shopInventoryPage.HideSureBox();
 
     }
-    IEnumerator DelayPlayerInventorySellButton()
+    private IEnumerator DelayPlayerInventorySellButton()
     {
         playerInventoryPage.HideSureBoxButton();
         yield return new WaitForSeconds(2f);

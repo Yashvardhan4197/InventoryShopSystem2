@@ -6,24 +6,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class UIInventoryPage : MonoBehaviour
+public abstract class InventoryViewUI : MonoBehaviour
 {
-    [SerializeField] public InventoryItem DefaultItem;
-    [SerializeField] public RectTransform controlPanel;
-    
+    [SerializeField] private InventoryItem DefaultItem;
+    [SerializeField] private RectTransform controlPanel;
+
     private Dictionary<InventoryItem,InventoryItemData>UIItemList = new Dictionary<InventoryItem,InventoryItemData>();
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private Image Image;
+    [SerializeField] private TextMeshProUGUI Title;
+    [SerializeField] private TextMeshProUGUI Description;
+    [SerializeField] private TextMeshProUGUI Rarity;
+    [SerializeField] private TextMeshProUGUI priceText;
+
     protected InventoryItemData inventoryItemData;
-    [SerializeField] CanvasGroup canvasGroup;
-    [SerializeField] Image Image;
-    [SerializeField] TextMeshProUGUI Title;
-    [SerializeField] TextMeshProUGUI Description;
-    [SerializeField] TextMeshProUGUI Rarity;
-    [SerializeField] TextMeshProUGUI priceText;
-
-    public UnityAction<InventoryItemData> UseItemEvent;
-    public UnityAction<InventoryItemData> BuyItemEvent;
-    public UnityAction<InventoryItemData> SellItemEvent;
-
     [SerializeField] protected CanvasGroup SureBox;
     [SerializeField] protected Button CloseSureBox;
     [SerializeField] protected Button SurelySellButton;
@@ -31,26 +27,11 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] protected TMP_InputField moneyText;
     [SerializeField] protected TextMeshProUGUI calculatedAmount;
 
+    public UnityAction<InventoryItemData> UseItemEvent;
     private void Awake()
     {
         ResetDescription();
         Hide();
-    }
-    protected void BuyItem()
-    {
-        if (GameManager.Instance.GetMoneyAmount() > inventoryItemData.item.MoneyAmount) {
-            BuyItemEvent?.Invoke(inventoryItemData);
-            
-        }
-        else
-        {
-            SoundManager.Instance.PlaySound(Sound.Deny);
-        }
-    }
-
-    protected void SellItem()
-    {
-        SellItemEvent?.Invoke(inventoryItemData);
     }
     private void SetDescription(InventoryItemData currentItem)
     {
@@ -100,10 +81,10 @@ public class UIInventoryPage : MonoBehaviour
     {
         foreach (var item in UIItemList)
         {
-            if (item.Key.inventoryItemData == itemID)
+            if (item.Key.GetInventoryItemData() == itemID)
             {
-                SetDescription(item.Key.inventoryItemData);
-                SoundManager.Instance.PlaySound(Sound.Open);
+                SetDescription(item.Key.GetInventoryItemData());
+                GameService.Instance.SoundService.PlaySound(Sound.Open);
             }
         }
         
@@ -114,7 +95,7 @@ public class UIInventoryPage : MonoBehaviour
         canvasGroup.interactable=true;
         canvasGroup.blocksRaycasts=true;
         ResetDescription();
-        SoundManager.Instance.PlaySound(Sound.Open);
+        GameService.Instance.SoundService.PlaySound(Sound.Open);
     }  
     public void Hide()
     {
@@ -132,7 +113,7 @@ public class UIInventoryPage : MonoBehaviour
         {
             int i = 0;
             foreach(var item1 in UIItemList)
-                if (item == item1.Key.inventoryItemData)
+                if (item == item1.Key.GetInventoryItemData())
                 {
                     item1.Key.SetData(item);
                     i = 1;
@@ -146,7 +127,7 @@ public class UIInventoryPage : MonoBehaviour
        var keysToRemove=new List<InventoryItem>();
        foreach(var item in UIItemList)
         {
-            if (!inventoryItemDatas.Contains(item.Key.inventoryItemData))
+            if (!inventoryItemDatas.Contains(item.Key.GetInventoryItemData()))
             {
                 keysToRemove.Add(item.Key);
             }
@@ -162,20 +143,23 @@ public class UIInventoryPage : MonoBehaviour
     {
         InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
         newItem.transform.SetParent(controlPanel);
-        newItem.inventoryItemData = item;
+        newItem.SetInventoryItemData(item);
         UIItemList.Add(newItem,item);
         newItem.SetData(item);
         newItem.OnButtonPressed += OnInventoryItemButtonPressed;
     }
 
-    protected void ShowSureBox()
+    public void ShowSureBox(InventoryItemData inventoryItemData)
     {
+        int temp = 0;
         SureBox.alpha = 1;
         SureBox.interactable = true;
         SureBox.blocksRaycasts = true;
         SurelySellButton.gameObject.SetActive(true);
+        calculatedAmount.text = temp.ToString();
+        SureBoxText.text= GetSureBoxText(inventoryItemData).text;
     }
-
+    public abstract TextMeshProUGUI GetSureBoxText(InventoryItemData inventoryItemData);
     
     public void HideSureBox()
     {
@@ -191,5 +175,27 @@ public class UIInventoryPage : MonoBehaviour
     public void HideSureBoxButton()
     {
         SurelySellButton.gameObject.SetActive(false);
+    }
+
+    protected bool CheckItemAvailability()
+    {
+        string temp = moneyText.text.ToString();
+        if (int.TryParse(temp, out int amountToSell))
+        {
+            Debug.Log("Money: " + amountToSell);
+            return true;
+        }
+        else
+        {
+            Debug.LogError("Invalid number in moneyText." + moneyText.text);
+            GameService.Instance.SoundService.PlaySound(Sound.Deny);
+        }
+        return false;
+    }
+    protected int GetItemIfAvailable()
+    {
+        int temp = int.Parse(moneyText.text.ToString());
+        return temp;
+
     }
 }

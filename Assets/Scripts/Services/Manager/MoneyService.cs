@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class GameManager : GenericMonoSingleton<GameManager>
+public class MoneyService
 {
     private int moneyAmount;
-    [SerializeField] UIPlayerManager playerManagerUI;
+    private MoneyManagerUI playerManagerUI;
 
-    private void Start()
+
+    public MoneyService(MoneyManagerUI moneyManagerUI)
     {
+        playerManagerUI = moneyManagerUI;
         SetMoneyAmount(100);
     }
     public int GetMoneyAmount()
