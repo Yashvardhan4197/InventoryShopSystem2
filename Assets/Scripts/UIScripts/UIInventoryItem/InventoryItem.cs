@@ -16,7 +16,7 @@ public class InventoryItem : MonoBehaviour
     {
         inventoryItemData = inventoryItem;
         ItemImage.gameObject.SetActive(true);
-        ItemImage.sprite = inventoryItem.item.image;
+        ItemImage.sprite = inventoryItem.item.Image;
         Amount.text = inventoryItem.quantity.ToString();
     }
     public InventoryItemData GetInventoryItemData()

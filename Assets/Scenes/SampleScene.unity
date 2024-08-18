@@ -1416,22 +1416,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620bbae8b13b0c64682a3d9841a95246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultItem: {fileID: 7601595744398963495, guid: c0ae4ee37a97d6f48a49835cc467ccf2, type: 3}
+  defaultItem: {fileID: 7601595744398963495, guid: c0ae4ee37a97d6f48a49835cc467ccf2, type: 3}
   controlPanel: {fileID: 128775051}
   canvasGroup: {fileID: 1755744520}
-  Image: {fileID: 1927933991}
-  Title: {fileID: 79368821}
-  Description: {fileID: 1797491692}
-  Rarity: {fileID: 700846701}
+  image: {fileID: 1927933991}
+  title: {fileID: 79368821}
+  description: {fileID: 1797491692}
+  rarity: {fileID: 700846701}
   priceText: {fileID: 2118416808}
-  SureBox: {fileID: 4609787902906604703}
-  CloseSureBox: {fileID: 1374630601}
-  SurelySellButton: {fileID: 4609787902906604705}
-  SureBoxText: {fileID: 4609787902906604707}
+  sureBox: {fileID: 4609787902906604703}
+  closeSureBox: {fileID: 1374630601}
+  surelySellButton: {fileID: 4609787902906604705}
+  sureBoxText: {fileID: 4609787902906604707}
   moneyText: {fileID: 866775772}
   calculatedAmount: {fileID: 4609787902906604706}
-  UseButton: {fileID: 417658154}
-  SellButton: {fileID: 1970182548606337584}
+  useButton: {fileID: 417658154}
+  sellButton: {fileID: 1970182548606337584}
 --- !u!225 &1755744520
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyManagerUI: {fileID: 1942763724}
-  SoundSFX: {fileID: 1487515951}
+  soundSFX: {fileID: 1487515951}
   soundTypes:
   - sound: 1
     clip: {fileID: 8300000, guid: 10a01f8f13d44ef4197380dfc05c15db, type: 3}
@@ -1993,18 +1993,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09663dacd7a80b4f8d87fbe2b8eaf82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DefaultItem: {fileID: 7601595744398963495, guid: c0ae4ee37a97d6f48a49835cc467ccf2, type: 3}
+  defaultItem: {fileID: 7601595744398963495, guid: c0ae4ee37a97d6f48a49835cc467ccf2, type: 3}
   controlPanel: {fileID: 284214178}
   canvasGroup: {fileID: 1064976931}
-  Image: {fileID: 266761082}
-  Title: {fileID: 281016100}
-  Description: {fileID: 338841513}
-  Rarity: {fileID: 1716054293}
+  image: {fileID: 266761082}
+  title: {fileID: 281016100}
+  description: {fileID: 338841513}
+  rarity: {fileID: 1716054293}
   priceText: {fileID: 1410437025}
-  SureBox: {fileID: 1832423259}
-  CloseSureBox: {fileID: 1798358169}
-  SurelySellButton: {fileID: 947654581}
-  SureBoxText: {fileID: 1524410365}
+  sureBox: {fileID: 1832423259}
+  closeSureBox: {fileID: 1798358169}
+  surelySellButton: {fileID: 947654581}
+  sureBoxText: {fileID: 1524410365}
   moneyText: {fileID: 2067529340}
   calculatedAmount: {fileID: 25379084}
   BuyItemButton: {fileID: 1868474774}

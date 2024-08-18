@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class SoundService
 {
-    private AudioSource SoundSFX;
+    private AudioSource soundSFX;
     private SoundTypes[] soundTypes;
 
     public SoundService(AudioSource audioSource, SoundTypes[] soundTypes) 
     {
-        SoundSFX = audioSource;
+        soundSFX = audioSource;
         this.soundTypes = soundTypes;
     }
     public void PlaySound(Sound sound)
@@ -16,7 +16,7 @@ public class SoundService
         AudioClip clip = GetAudioClip(sound);
         if(clip!= null)
         {
-            SoundSFX.PlayOneShot(clip);
+            soundSFX.PlayOneShot(clip);
         }
     }
 

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 232457e6f3bf615418fe88ad51877ccd, type: 3}
   m_Name: Grace
   m_EditorClassIdentifier: 
-  image: {fileID: 21300000, guid: 2d089513ae4adfc48a683c362ad9992c, type: 3}
-  itemName: Grace
+  Image: {fileID: 21300000, guid: 2d089513ae4adfc48a683c362ad9992c, type: 3}
+  ItemName: Grace
   id: 1
-  description: Will Heal you
-  rarity: Easy
+  Description: Will Heal You
+  Rarity: Mid
   MoneyAmount: 50

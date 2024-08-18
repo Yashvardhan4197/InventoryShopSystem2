@@ -2,6 +2,7 @@
 public class MoneyService
 {
     private int moneyAmount;
+    public int MoneyAmount { get { return moneyAmount; } }
     private MoneyManagerUI playerManagerUI;
 
 
@@ -9,10 +10,6 @@ public class MoneyService
     {
         playerManagerUI = moneyManagerUI;
         SetMoneyAmount(100);
-    }
-    public int GetMoneyAmount()
-    {
-        return moneyAmount;
     }
     public void SetMoneyAmount(int moneyAmount)
     {

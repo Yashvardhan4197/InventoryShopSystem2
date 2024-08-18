@@ -84,7 +84,7 @@ public class InventoryController
     {
         int totalMoneyToUpdate = amountToBuy * inventoryItemData.item.MoneyAmount;
         shopInventoryPage.CalculateAmount(totalMoneyToUpdate);
-        if (amountToBuy <= inventoryItemData.quantity && moneyService.GetMoneyAmount()>=totalMoneyToUpdate)
+        if (amountToBuy <= inventoryItemData.quantity && moneyService.MoneyAmount>=totalMoneyToUpdate)
         {
             
             int changedValue=inventoryItemData.quantity;
@@ -97,7 +97,7 @@ public class InventoryController
             }
             shopInventoryPage.UpdateInventory(shopInventoryModel.GetInventoryItemData_1());
             playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
-            moneyService.SetMoneyAmount(moneyService.GetMoneyAmount() - totalMoneyToUpdate);
+            moneyService.SetMoneyAmount(moneyService.MoneyAmount - totalMoneyToUpdate);
             soundService.PlaySound(Sound.Accept);
 
 
@@ -119,7 +119,7 @@ public class InventoryController
         {
             int totalMoneyToUpdate = amountToSell * inventoryItemData.item.MoneyAmount;
             playerInventoryPage.CalculateAmount(totalMoneyToUpdate);
-            moneyService.SetMoneyAmount(moneyService.GetMoneyAmount()+totalMoneyToUpdate);
+            moneyService.SetMoneyAmount(moneyService.MoneyAmount +totalMoneyToUpdate);
             inventoryItemData.ChangeQuantity(inventoryItemData.quantity - amountToSell);
             playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
             soundService.PlaySound(Sound.Accept);

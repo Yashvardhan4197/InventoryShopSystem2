@@ -8,22 +8,22 @@ public abstract class InventoryViewUI : MonoBehaviour
 {
     protected InventoryController inventoryController;
 
-    [SerializeField] private InventoryItem DefaultItem;
+    [SerializeField] private InventoryItem defaultItem;
     [SerializeField] private RectTransform controlPanel;
 
     private Dictionary<InventoryItem,InventoryItemData>UIItemList = new Dictionary<InventoryItem,InventoryItemData>();
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private Image Image;
-    [SerializeField] private TextMeshProUGUI Title;
-    [SerializeField] private TextMeshProUGUI Description;
-    [SerializeField] private TextMeshProUGUI Rarity;
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI title;
+    [SerializeField] private TextMeshProUGUI description;
+    [SerializeField] private TextMeshProUGUI rarity;
     [SerializeField] private TextMeshProUGUI priceText;
 
     protected InventoryItemData inventoryItemData;
-    [SerializeField] protected CanvasGroup SureBox;
-    [SerializeField] protected Button CloseSureBox;
-    [SerializeField] protected Button SurelySellButton;
-    [SerializeField] protected TextMeshProUGUI SureBoxText;
+    [SerializeField] protected CanvasGroup sureBox;
+    [SerializeField] protected Button closeSureBox;
+    [SerializeField] protected Button surelySellButton;
+    [SerializeField] protected TextMeshProUGUI sureBoxText;
     [SerializeField] protected TMP_InputField moneyText;
     [SerializeField] protected TextMeshProUGUI calculatedAmount;
 
@@ -40,25 +40,25 @@ public abstract class InventoryViewUI : MonoBehaviour
     private void SetDescription(InventoryItemData currentItem)
     {
         inventoryItemData = currentItem;
-        this.Description.gameObject.SetActive(true);
-        this.Image.gameObject.SetActive(true);
-        this.Title.gameObject.SetActive(true);
-        Rarity.gameObject.SetActive(true);
+        this.description.gameObject.SetActive(true);
+        this.image.gameObject.SetActive(true);
+        this.title.gameObject.SetActive(true);
+        rarity.gameObject.SetActive(true);
         priceText.gameObject.SetActive(true);
-        this.Rarity.text = "Rarity: " + currentItem.item.rarity;
+        this.rarity.text = "Rarity: " + currentItem.item.Rarity;
 
-        this.Image.sprite = currentItem.item.image;
-        this.Title.text = currentItem.item.name;
-        this.Description.text = currentItem.item.description;
+        this.image.sprite = currentItem.item.Image;
+        this.title.text = currentItem.item.name;
+        this.description.text = currentItem.item.Description;
         this.priceText.text ="Price: "+ currentItem.item.MoneyAmount.ToString();
     }
 
     private void ResetDescription()
     {
-        Description.gameObject.SetActive(false);
-        Image.gameObject.SetActive(false);
-        Title.gameObject.SetActive(false);
-        Rarity.gameObject.SetActive(false);
+        description.gameObject.SetActive(false);
+        image.gameObject.SetActive(false);
+        title.gameObject.SetActive(false);
+        rarity.gameObject.SetActive(false);
         priceText.gameObject.SetActive(false);
     }
 
@@ -145,7 +145,7 @@ public abstract class InventoryViewUI : MonoBehaviour
     }
     private void AddNewItem(InventoryItemData item)
     {
-        InventoryItem newItem = Instantiate(DefaultItem, Vector3.zero, Quaternion.identity);
+        InventoryItem newItem = Instantiate(defaultItem, Vector3.zero, Quaternion.identity);
         newItem.transform.SetParent(controlPanel);
         newItem.SetInventoryItemData(item);
         UIItemList.Add(newItem,item);
@@ -156,20 +156,20 @@ public abstract class InventoryViewUI : MonoBehaviour
     public void ShowSureBox(InventoryItemData inventoryItemData)
     {
         int temp = 0;
-        SureBox.alpha = 1;
-        SureBox.interactable = true;
-        SureBox.blocksRaycasts = true;
-        SurelySellButton.gameObject.SetActive(true);
+        sureBox.alpha = 1;
+        sureBox.interactable = true;
+        sureBox.blocksRaycasts = true;
+        surelySellButton.gameObject.SetActive(true);
         calculatedAmount.text = temp.ToString();
-        SureBoxText.text= GetSureBoxText(inventoryItemData).text;
+        sureBoxText.text= GetSureBoxText(inventoryItemData).text;
     }
     public abstract TextMeshProUGUI GetSureBoxText(InventoryItemData inventoryItemData);
     
     public void HideSureBox()
     {
-        SureBox.alpha = 0;
-        SureBox.interactable = true;
-        SureBox.blocksRaycasts = false;
+        sureBox.alpha = 0;
+        sureBox.interactable = true;
+        sureBox.blocksRaycasts = false;
 
     }
     public void CalculateAmount(int amount)
@@ -178,7 +178,7 @@ public abstract class InventoryViewUI : MonoBehaviour
     }
     public void HideSureBoxButton()
     {
-        SurelySellButton.gameObject.SetActive(false);
+        surelySellButton.gameObject.SetActive(false);
     }
 
     protected bool CheckItemAvailability()

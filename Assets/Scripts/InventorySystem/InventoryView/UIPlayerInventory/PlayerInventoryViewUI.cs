@@ -7,17 +7,17 @@ using UnityEngine.UI;
 
 public class PlayerInventoryViewUI : InventoryViewUI
 {
-    [SerializeField] private Button UseButton;
-    [SerializeField] private Button SellButton;
+    [SerializeField] private Button useButton;
+    [SerializeField] private Button sellButton;
     public UnityAction<InventoryItemData> SellItemEvent;
     public UnityAction<InventoryItemData,int> SellItemEventSureBox;
     private void Start()
     {
-        UseButton.onClick.AddListener(UseItem);
-        SellButton.onClick.AddListener(SellItem);
-        SurelySellButton.onClick.AddListener(StartSellingEvent);
+        useButton.onClick.AddListener(UseItem);
+        sellButton.onClick.AddListener(SellItem);
+        surelySellButton.onClick.AddListener(StartSellingEvent);
         SellItemEvent += ShowSureBox;
-        CloseSureBox.onClick.AddListener(HideSureBox);
+        closeSureBox.onClick.AddListener(HideSureBox);
         //SurelySellButton.onClick.AddListener(StartSellingEvent);
         HideSureBox();
     }
@@ -31,8 +31,8 @@ public class PlayerInventoryViewUI : InventoryViewUI
     }
     public override TextMeshProUGUI GetSureBoxText(InventoryItemData inventoryItemData)
     {
-        SureBoxText.text ="SELL: "+ inventoryItemData.item.name;
-        return SureBoxText;
+        sureBoxText.text ="SELL: "+ inventoryItemData.item.name;
+        return sureBoxText;
     }
     void StartSellingEvent()
     {

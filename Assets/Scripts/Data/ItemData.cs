@@ -4,17 +4,17 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
 
-    public Sprite image;
-    public string itemName;
+    public Sprite Image;
+    public string ItemName;
     public int id;
 
     [field: TextArea]
-    public string description;
+    public string Description;
     [field: TextArea]
-    public string rarity;
+    public string Rarity;
     public int MoneyAmount;
     public void SetName(string name)
     {
-        this.itemName = name;
+        this.ItemName = name;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryModel : ScriptableObject
 {
      public List<InventoryItemData> InventoryItemDatas;
-     public List<StartingElements> startingElements;
+     public List<StartingElements> StartingElements;
     
     public void Initialize()
     {
@@ -51,7 +51,7 @@ public class InventoryModel : ScriptableObject
     }
     public List<StartingElements> GetStartingItemData()
     {
-        List<StartingElements> returnValue = startingElements;
+        List<StartingElements> returnValue = StartingElements;
         return returnValue;
     }
 

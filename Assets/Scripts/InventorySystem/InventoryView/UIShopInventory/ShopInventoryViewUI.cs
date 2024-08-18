@@ -12,15 +12,15 @@ public class ShopInventoryViewUI : InventoryViewUI
     {
         BuyItemButton.onClick.AddListener(BuyItem);
         BuyItemEvent += ShowSureBox;
-        CloseSureBox.onClick.AddListener(HideSureBox);
-        SurelySellButton.onClick.AddListener(StartBuyingEvent);
+        closeSureBox.onClick.AddListener(HideSureBox);
+        surelySellButton.onClick.AddListener(StartBuyingEvent);
 
         Hide();
         HideSureBox();
     }
     private void BuyItem()
     {
-        if (inventoryController.moneyService.GetMoneyAmount() >= inventoryItemData.item.MoneyAmount)
+        if (inventoryController.moneyService.MoneyAmount >= inventoryItemData.item.MoneyAmount)
         {
             BuyItemEvent?.Invoke(inventoryItemData);
 
@@ -44,8 +44,8 @@ public class ShopInventoryViewUI : InventoryViewUI
 
     public override TextMeshProUGUI GetSureBoxText(InventoryItemData inventoryItemData)
     {
-        SureBoxText.text = "BUY: " + inventoryItemData.item.name;
-        return SureBoxText;
+        sureBoxText.text = "BUY: " + inventoryItemData.item.name;
+        return sureBoxText;
     }
     public void StartSureBoxClosingProcess()
     {
