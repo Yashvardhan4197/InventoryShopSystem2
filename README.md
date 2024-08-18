@@ -11,7 +11,7 @@ This project aims to recreate the an Inventory System using various design patte
 
 ## Patterns Used
 - Model View Controller
-- Service Locator
+- Dependency Injection
 - Singletons
 - Observer Pattern
 ---
