@@ -8,9 +8,9 @@ public class ItemData : ScriptableObject
     public string ItemName;
     public int id;
 
-    [field: TextArea]
+    [TextArea]
     public string Description;
-    [field: TextArea]
+    [TextArea]
     public string Rarity;
     public int MoneyAmount;
     public void SetName(string name)
