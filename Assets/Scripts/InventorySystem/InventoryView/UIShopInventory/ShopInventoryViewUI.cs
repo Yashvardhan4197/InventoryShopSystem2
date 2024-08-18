@@ -20,14 +20,14 @@ public class ShopInventoryViewUI : InventoryViewUI
     }
     private void BuyItem()
     {
-        if (GameService.Instance.MoneyService.GetMoneyAmount() >= inventoryItemData.item.MoneyAmount)
+        if (inventoryController.moneyService.GetMoneyAmount() >= inventoryItemData.item.MoneyAmount)
         {
             BuyItemEvent?.Invoke(inventoryItemData);
 
         }
         else
         {
-            GameService.Instance.SoundService.PlaySound(Sound.Deny);
+            inventoryController.soundService.PlaySound(Sound.Deny);
         }
     }
     private void StartBuyingEvent()
@@ -47,5 +47,8 @@ public class ShopInventoryViewUI : InventoryViewUI
         SureBoxText.text = "BUY: " + inventoryItemData.item.name;
         return SureBoxText;
     }
-
+    public void StartSureBoxClosingProcess()
+    {
+        StartCoroutine(inventoryController.DelayShopSureBoxClosing());
+    }
 }

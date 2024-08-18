@@ -2,20 +2,37 @@ using System.Collections;
 using UnityEngine;
 
 
-public class InventoryController : MonoBehaviour
+public class InventoryController
 {
-    [SerializeField] private PlayerInventoryViewUI playerInventoryPage;
-    [SerializeField] private ShopInventoryViewUI  shopInventoryPage;
-    [SerializeField] private InventoryModel playerInventoryModel;
-    [SerializeField] private InventoryModel shopInventorySO;
+     private PlayerInventoryViewUI playerInventoryPage;
+     private ShopInventoryViewUI  shopInventoryPage;
+     private InventoryModel playerInventoryModel;
+     private InventoryModel shopInventoryModel;
+     public SoundService soundService;
+     public MoneyService moneyService;
 
-    private void Start()
+    public InventoryController(PlayerInventoryViewUI playerInventoryPage,ShopInventoryViewUI shopInventoryPage,InventoryModel playerInventoryModel,InventoryModel shopInventoryModel)
+    {
+        this.playerInventoryPage = playerInventoryPage;
+        this.shopInventoryPage = shopInventoryPage;
+        this.playerInventoryModel = playerInventoryModel;
+        this.shopInventoryModel = shopInventoryModel;
+    }
+    public void Init(SoundService soundService, MoneyService moneyService)
+    {
+        this.soundService = soundService;
+        this.moneyService = moneyService;
+        playerInventoryPage.SetController(this);
+        shopInventoryPage.SetController(this);
+        Initialize();
+    } 
+    private void Initialize()
     {
         playerInventoryModel.Initialize();
-        shopInventorySO.Initialize();
+        shopInventoryModel.Initialize();
         InitializeStartingItems();
         playerInventoryPage.InitializeItems(playerInventoryModel.GetInventoryItemData_1());
-        shopInventoryPage.InitializeItems(shopInventorySO.GetInventoryItemData_1());
+        shopInventoryPage.InitializeItems(shopInventoryModel.GetInventoryItemData_1());
         playerInventoryPage.UseItemEvent += UseItemButtonPressed;
         shopInventoryPage.BuyItemEventSureBox += Buyitem;
         playerInventoryPage.SellItemEventSureBox += SellItemSurely;
@@ -32,9 +49,9 @@ public class InventoryController : MonoBehaviour
         {
             playerInventoryModel.AddItem(item.item, item.quantity);
         }
-        foreach(var item in shopInventorySO.GetStartingItemData())
+        foreach(var item in shopInventoryModel.GetStartingItemData())
         {
-            shopInventorySO.AddItem(item.item,item.quantity);
+            shopInventoryModel.AddItem(item.item,item.quantity);
         }
     }
 
@@ -56,7 +73,7 @@ public class InventoryController : MonoBehaviour
                 {
                     playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
                 }
-                GameService.Instance.SoundService.PlaySound(Sound.Open);
+                soundService.PlaySound(Sound.Open);
                 return;
             }
         }
@@ -67,7 +84,7 @@ public class InventoryController : MonoBehaviour
     {
         int totalMoneyToUpdate = amountToBuy * inventoryItemData.item.MoneyAmount;
         shopInventoryPage.CalculateAmount(totalMoneyToUpdate);
-        if (amountToBuy <= inventoryItemData.quantity&&GameService.Instance.MoneyService.GetMoneyAmount()>=totalMoneyToUpdate)
+        if (amountToBuy <= inventoryItemData.quantity && moneyService.GetMoneyAmount()>=totalMoneyToUpdate)
         {
             
             int changedValue=inventoryItemData.quantity;
@@ -78,22 +95,22 @@ public class InventoryController : MonoBehaviour
             {
                 inventoryItemData.ResetItemSlot();
             }
-            shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
+            shopInventoryPage.UpdateInventory(shopInventoryModel.GetInventoryItemData_1());
             playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
-            GameService.Instance.MoneyService.SetMoneyAmount(GameService.Instance.MoneyService.GetMoneyAmount() - totalMoneyToUpdate);
-            GameService.Instance.SoundService.PlaySound(Sound.Accept);
+            moneyService.SetMoneyAmount(moneyService.GetMoneyAmount() - totalMoneyToUpdate);
+            soundService.PlaySound(Sound.Accept);
 
 
             if (inventoryItemData.quantity <= 0)
             {
-                StartCoroutine(DelayShopSureBoxClosing());
+                playerInventoryPage.StartSureBoxClosingProcess();
 
             }
 
         }
         else
         {
-            GameService.Instance.SoundService.PlaySound(Sound.Deny);
+            soundService.PlaySound(Sound.Deny);
         }
     }
     public void SellItemSurely(InventoryItemData inventoryItemData,int amountToSell)
@@ -102,31 +119,31 @@ public class InventoryController : MonoBehaviour
         {
             int totalMoneyToUpdate = amountToSell * inventoryItemData.item.MoneyAmount;
             playerInventoryPage.CalculateAmount(totalMoneyToUpdate);
-            GameService.Instance.MoneyService.SetMoneyAmount(GameService.Instance.MoneyService.GetMoneyAmount()+totalMoneyToUpdate);
+            moneyService.SetMoneyAmount(moneyService.GetMoneyAmount()+totalMoneyToUpdate);
             inventoryItemData.ChangeQuantity(inventoryItemData.quantity - amountToSell);
             playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData_1());
-            GameService.Instance.SoundService.PlaySound(Sound.Accept);
+            soundService.PlaySound(Sound.Accept);
             if (inventoryItemData.quantity <= 0)
             {
-                StartCoroutine(DelayPlayerInventorySellButton());
+                playerInventoryPage.StartSureBoxClosingProcess();
             }
-            shopInventorySO.AddItem(inventoryItemData.item, amountToSell);
-            shopInventoryPage.UpdateInventory(shopInventorySO.GetInventoryItemData_1());
+            shopInventoryModel.AddItem(inventoryItemData.item, amountToSell);
+            shopInventoryPage.UpdateInventory(shopInventoryModel.GetInventoryItemData_1());
         }
         else
         {
-            GameService.Instance.SoundService.PlaySound(Sound.Deny);
+            soundService.PlaySound(Sound.Deny);
         }
     }
 
-    private IEnumerator DelayShopSureBoxClosing()
+    public IEnumerator DelayShopSureBoxClosing()
     {
         shopInventoryPage.HideSureBoxButton();
         yield return new WaitForSeconds(2f);
         shopInventoryPage.HideSureBox();
 
     }
-    private IEnumerator DelayPlayerInventorySellButton()
+    public IEnumerator DelayPlayerInventorySellButton()
     {
         playerInventoryPage.HideSureBoxButton();
         yield return new WaitForSeconds(2f);

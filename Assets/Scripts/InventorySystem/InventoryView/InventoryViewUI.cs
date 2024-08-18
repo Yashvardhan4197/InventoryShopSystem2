@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public abstract class InventoryViewUI : MonoBehaviour
 {
+    protected InventoryController inventoryController;
+
     [SerializeField] private InventoryItem DefaultItem;
     [SerializeField] private RectTransform controlPanel;
 
@@ -30,6 +32,10 @@ public abstract class InventoryViewUI : MonoBehaviour
     {
         ResetDescription();
         Hide();
+    }
+    public void SetController(InventoryController inventoryController)
+    {
+        this.inventoryController = inventoryController;
     }
     private void SetDescription(InventoryItemData currentItem)
     {
@@ -82,7 +88,7 @@ public abstract class InventoryViewUI : MonoBehaviour
             if (item.Key.GetInventoryItemData() == itemID)
             {
                 SetDescription(item.Key.GetInventoryItemData());
-                GameService.Instance.SoundService.PlaySound(Sound.Open);
+                inventoryController.soundService.PlaySound(Sound.Open);
             }
         }
         
@@ -93,7 +99,7 @@ public abstract class InventoryViewUI : MonoBehaviour
         canvasGroup.interactable=true;
         canvasGroup.blocksRaycasts=true;
         ResetDescription();
-        GameService.Instance.SoundService.PlaySound(Sound.Open);
+        inventoryController.soundService.PlaySound(Sound.Open);
     }  
     public void Hide()
     {
@@ -186,7 +192,7 @@ public abstract class InventoryViewUI : MonoBehaviour
         else
         {
             Debug.LogError("Invalid number in moneyText." + moneyText.text);
-            GameService.Instance.SoundService.PlaySound(Sound.Deny);
+            inventoryController.soundService.PlaySound(Sound.Deny);
         }
         return false;
     }

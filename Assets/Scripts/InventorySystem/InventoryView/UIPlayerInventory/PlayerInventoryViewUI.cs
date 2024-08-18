@@ -41,4 +41,9 @@ public class PlayerInventoryViewUI : InventoryViewUI
             SellItemEventSureBox?.Invoke(inventoryItemData,GetItemIfAvailable());
         }
     }
+
+    public void StartSureBoxClosingProcess()
+    {
+        StartCoroutine(inventoryController.DelayPlayerInventorySellButton());
+    }
 }
