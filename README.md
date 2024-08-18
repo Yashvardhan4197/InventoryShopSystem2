@@ -18,7 +18,7 @@ This project aims to recreate the an Inventory System using various design patte
 
 
 ### WorkFlow Architecture
-![Patterns](https://github.com/user-attachments/assets/ec0b66a1-dca8-4681-9535-78b57287207a)
+![Blank diagram - Page 3(1)](https://github.com/user-attachments/assets/db59021a-4e7e-4db6-a2c3-2fe3192cd4d5)
 ![ScriptableObjects](https://github.com/user-attachments/assets/ce8fe53e-c53a-4779-9710-3d92f6b2d43f)
 
 ---
