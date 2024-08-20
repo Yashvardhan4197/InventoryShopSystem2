@@ -4,15 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="newInventory",menuName ="ScriptableObjects/newInventory")]
 public class InventoryModel : ScriptableObject
 {
-     public List<InventoryItemData> InventoryItemDatas;
-     public List<StartingElements> StartingElements;
+    public List<InventoryItemData> InventoryItemDatas;
+    public List<StartingElements> StartingElements;
     
     public void Initialize()
     {
         InventoryItemDatas = new List<InventoryItemData>();
     }
    
-
     public void AddItem(ItemData item,int quantity)
     {
         foreach (var itemData in InventoryItemDatas)
@@ -27,7 +26,8 @@ public class InventoryModel : ScriptableObject
         InventoryItemDatas.Add(newItem);
         
     }
-    public List<InventoryItemData> GetInventoryItemData_1()
+
+    public List<InventoryItemData> GetInventoryItemData()
     {
         List<InventoryItemData>returnValue= new List<InventoryItemData>();
         List<InventoryItemData>toDelete= new List<InventoryItemData>();
@@ -49,6 +49,7 @@ public class InventoryModel : ScriptableObject
         }
         return returnValue;
     }
+
     public List<StartingElements> GetStartingItemData()
     {
         List<StartingElements> returnValue = StartingElements;

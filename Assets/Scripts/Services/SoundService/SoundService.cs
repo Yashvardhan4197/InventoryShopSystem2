@@ -11,6 +11,7 @@ public class SoundService
         soundSFX = audioSource;
         this.soundTypes = soundTypes;
     }
+
     public void PlaySound(Sound sound)
     {
         AudioClip clip = GetAudioClip(sound);

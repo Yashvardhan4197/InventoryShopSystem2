@@ -14,17 +14,20 @@ public class GameService : MonoBehaviour
     private SoundService soundService;
     private MoneyService moneyService;
 
-    private InventoryController inventoryController;
+    private PlayerInventoryController playerInventoryController;
+    private ShopInventoryController shopInventoryController;
     private void Start()
     {
         soundService = new SoundService(soundSFX,soundTypes);
         moneyService=new MoneyService(moneyManagerUI);
-        inventoryController = new InventoryController(playerInventoryView, ShopinventoryView, playerInventoryModel, shopInventoryModel);
+        playerInventoryController = new PlayerInventoryController(playerInventoryView, playerInventoryModel);
+        shopInventoryController=new ShopInventoryController(ShopinventoryView,shopInventoryModel);
         InjectDependencies();
     }
 
     private void InjectDependencies()
     {
-        inventoryController.Init(soundService, moneyService);
+        playerInventoryController.Init(soundService, moneyService);
+        shopInventoryController.Init(soundService, moneyService);
     }
 }

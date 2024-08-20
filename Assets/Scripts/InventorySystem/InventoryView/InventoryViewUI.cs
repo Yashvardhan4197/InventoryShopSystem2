@@ -28,15 +28,13 @@ public abstract class InventoryViewUI : MonoBehaviour
     [SerializeField] protected TextMeshProUGUI calculatedAmount;
 
     public UnityAction<InventoryItemData> UseItemEvent;
+
     private void Awake()
     {
         ResetDescription();
         Hide();
     }
-    public void SetController(InventoryController inventoryController)
-    {
-        this.inventoryController = inventoryController;
-    }
+
     private void SetDescription(InventoryItemData currentItem)
     {
         inventoryItemData = currentItem;
@@ -62,13 +60,51 @@ public abstract class InventoryViewUI : MonoBehaviour
         priceText.gameObject.SetActive(false);
     }
 
+    private void AddNewItem(InventoryItemData item)
+    {
+        InventoryItem newItem = Instantiate(defaultItem, Vector3.zero, Quaternion.identity);
+        newItem.transform.SetParent(controlPanel);
+        newItem.SetInventoryItemData(item);
+        UIItemList.Add(newItem, item);
+        newItem.SetData(item);
+        newItem.OnButtonPressed += OnInventoryItemButtonPressed;
+    }
+
     protected void UseItem()
     {
         UseItemEvent?.Invoke(inventoryItemData);
-
-
     }
 
+    protected virtual void OnInventoryItemButtonPressed(InventoryItemData itemID)
+    {
+        foreach (var item in UIItemList)
+        {
+            if (item.Key.GetInventoryItemData() == itemID)
+            {
+                SetDescription(item.Key.GetInventoryItemData());
+            }
+        }
+    }
+
+    protected bool CheckItemAvailability()
+    {
+        string temp = moneyText.text.ToString();
+        if (int.TryParse(temp, out int amountToSell))
+        {
+            return true;
+        }
+        else
+        {
+            inventoryController.soundService.PlaySound(Sound.Deny);
+        }
+        return false;
+    }
+    protected int GetItemIfAvailable()
+    {
+        int temp = int.Parse(moneyText.text.ToString());
+        return temp;
+
+    }
 
     public void InitializeItems(List<InventoryItemData>inventoryItemDatas)
     {
@@ -78,29 +114,15 @@ public abstract class InventoryViewUI : MonoBehaviour
         }
         UpdateInventory(inventoryItemDatas);
     }
-    
-   
 
-    private void OnInventoryItemButtonPressed(InventoryItemData itemID)
-    {
-        foreach (var item in UIItemList)
-        {
-            if (item.Key.GetInventoryItemData() == itemID)
-            {
-                SetDescription(item.Key.GetInventoryItemData());
-                inventoryController.soundService.PlaySound(Sound.Open);
-            }
-        }
-        
-    }
-    public void Show()
+    public virtual void Show()
     {
         canvasGroup.alpha = 1;
         canvasGroup.interactable=true;
         canvasGroup.blocksRaycasts=true;
         ResetDescription();
-        inventoryController.soundService.PlaySound(Sound.Open);
-    }  
+    } 
+
     public void Hide()
     {
         canvasGroup.alpha = 0;
@@ -109,11 +131,9 @@ public abstract class InventoryViewUI : MonoBehaviour
         
     }
 
-    
-
     public void UpdateInventory(List<InventoryItemData> inventoryItemDatas)
     {
-       foreach(InventoryItemData item in inventoryItemDatas)
+        foreach (InventoryItemData item in inventoryItemDatas)
         {
             int i = 0;
             foreach(var item1 in UIItemList)
@@ -140,17 +160,7 @@ public abstract class InventoryViewUI : MonoBehaviour
         {
             Destroy(key.gameObject);
             UIItemList.Remove(key);
-
         }
-    }
-    private void AddNewItem(InventoryItemData item)
-    {
-        InventoryItem newItem = Instantiate(defaultItem, Vector3.zero, Quaternion.identity);
-        newItem.transform.SetParent(controlPanel);
-        newItem.SetInventoryItemData(item);
-        UIItemList.Add(newItem,item);
-        newItem.SetData(item);
-        newItem.OnButtonPressed += OnInventoryItemButtonPressed;
     }
 
     public void ShowSureBox(InventoryItemData inventoryItemData)
@@ -161,10 +171,16 @@ public abstract class InventoryViewUI : MonoBehaviour
         sureBox.blocksRaycasts = true;
         surelySellButton.gameObject.SetActive(true);
         calculatedAmount.text = temp.ToString();
-        sureBoxText.text= GetSureBoxText(inventoryItemData).text;
+        if (inventoryItemData != null) { sureBoxText.text = GetSureBoxText(inventoryItemData).text; }
     }
+
     public abstract TextMeshProUGUI GetSureBoxText(InventoryItemData inventoryItemData);
-    
+
+    public void SetController(InventoryController inventoryController)
+    {
+        this.inventoryController = inventoryController;
+    }
+
     public void HideSureBox()
     {
         sureBox.alpha = 0;
@@ -172,34 +188,16 @@ public abstract class InventoryViewUI : MonoBehaviour
         sureBox.blocksRaycasts = false;
 
     }
+
     public void CalculateAmount(int amount)
     {
         calculatedAmount.text = amount.ToString();
     }
+
     public void HideSureBoxButton()
     {
         surelySellButton.gameObject.SetActive(false);
-    }
-
-    protected bool CheckItemAvailability()
-    {
-        string temp = moneyText.text.ToString();
-        if (int.TryParse(temp, out int amountToSell))
-        {
-            Debug.Log("Money: " + amountToSell);
-            return true;
-        }
-        else
-        {
-            Debug.LogError("Invalid number in moneyText." + moneyText.text);
-            inventoryController.soundService.PlaySound(Sound.Deny);
-        }
-        return false;
-    }
-    protected int GetItemIfAvailable()
-    {
-        int temp = int.Parse(moneyText.text.ToString());
-        return temp;
 
     }
+
 }

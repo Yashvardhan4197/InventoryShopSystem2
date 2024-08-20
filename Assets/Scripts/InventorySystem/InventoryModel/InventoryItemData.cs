@@ -6,6 +6,7 @@ public class InventoryItemData
     public ItemData item;
     public int quantity;
     public int itemID = -1;
+
     public InventoryItemData(ItemData item, int quantity)
     {
         this.item = item;
@@ -19,6 +20,7 @@ public class InventoryItemData
             itemID = -1;
         }
     }
+
     public bool isEmpty()
     {
         if (item == null || quantity == 0)
@@ -33,6 +35,7 @@ public class InventoryItemData
         this.quantity = quantity;
 
     }
+
     public void ResetItemSlot()
     {
         item = null;

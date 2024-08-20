@@ -7,26 +7,10 @@ public class InventoryItem : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Amount;
     [SerializeField] private Image ItemImage;
     [SerializeField] private Button ItemButton;
-
     [SerializeField] private Sprite defaultSprite;
 
     private InventoryItemData inventoryItemData;
     public event UnityAction<InventoryItemData> OnButtonPressed;
-    public void SetData(InventoryItemData inventoryItem)
-    {
-        inventoryItemData = inventoryItem;
-        ItemImage.gameObject.SetActive(true);
-        ItemImage.sprite = inventoryItem.item.Image;
-        Amount.text = inventoryItem.quantity.ToString();
-    }
-    public InventoryItemData GetInventoryItemData()
-    {
-        return inventoryItemData;
-    }
-    public void SetInventoryItemData(InventoryItemData inventoryItemData)
-    {
-        this.inventoryItemData=inventoryItemData;
-    }
 
     private void Awake()
     {
@@ -37,4 +21,23 @@ public class InventoryItem : MonoBehaviour
     {
         OnButtonPressed?.Invoke(inventoryItemData);
     }
+
+    public void SetData(InventoryItemData inventoryItem)
+    {
+        inventoryItemData = inventoryItem;
+        ItemImage.gameObject.SetActive(true);
+        ItemImage.sprite = inventoryItem.item.Image;
+        Amount.text = inventoryItem.quantity.ToString();
+    }
+
+    public InventoryItemData GetInventoryItemData()
+    {
+        return inventoryItemData;
+    }
+
+    public void SetInventoryItemData(InventoryItemData inventoryItemData)
+    {
+        this.inventoryItemData = inventoryItemData;
+    }
+
 }
