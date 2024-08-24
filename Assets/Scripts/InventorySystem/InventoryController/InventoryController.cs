@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine.Events;
 
 
@@ -8,6 +9,7 @@ public abstract class InventoryController
     public SoundService soundService;
     public MoneyService moneyService;
 
+    protected List<InventoryItemData> AllItems;
     protected static UnityAction<InventoryItemData, int> SoldItemEvent;
     protected static UnityAction<InventoryItemData, int> BoughtItemEvent;
 

@@ -1,8 +1,11 @@
 
+using System.Collections.Generic;
+
 public class PlayerInventoryController: InventoryController
 {
     private PlayerInventoryViewUI playerInventoryPage;
     private InventoryModel playerInventoryModel;
+    
 
     private void BoughtItem(InventoryItemData inventoryItemData, int amountToBuy)
     {
@@ -10,10 +13,11 @@ public class PlayerInventoryController: InventoryController
         playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
-    public PlayerInventoryController(PlayerInventoryViewUI playerInventoryPage, InventoryModel playerInventoryModel)
+    public PlayerInventoryController(PlayerInventoryViewUI playerInventoryPage, InventoryModel playerInventoryModel,List<InventoryItemData>AllItems)
     {
         this.playerInventoryPage = playerInventoryPage;
         this.playerInventoryModel = playerInventoryModel;
+        this.AllItems=AllItems;
     }
 
     public override void Init(SoundService soundService, MoneyService moneyService)
@@ -84,10 +88,14 @@ public class PlayerInventoryController: InventoryController
 
     protected override void InitializeStartingItems()
     {
-        foreach (var item in playerInventoryModel.GetStartingItemData())
-        {
-            playerInventoryModel.AddItem(item.item, item.quantity);
-        }
+        
+    }
+
+    public void AddRandomItem()
+    {
+        int temp = UnityEngine.Random.Range(0,AllItems.Count);
+        playerInventoryModel.AddItem(playerInventoryModel.AllElements[temp].item, playerInventoryModel.AllElements[temp].quantity);
+        playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
     ~PlayerInventoryController()
@@ -95,5 +103,6 @@ public class PlayerInventoryController: InventoryController
         playerInventoryPage.UseItemEvent -= UseItemButtonPressed;
         playerInventoryPage.SellItemEventSureBox -= SellItemSurely;
     }
+
 
 }

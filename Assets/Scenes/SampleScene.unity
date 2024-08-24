@@ -946,7 +946,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1755744517}
-        m_TargetAssemblyTypeName: InventoryViewUI, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerInventoryViewUI, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -2121,7 +2121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 680687692338402952, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1510208531552319666, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2440,7 +2440,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4709017037121153556, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
+      propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5911889085635872593, guid: 600a7f0e6ac998f4d8618cc8591ba882, type: 3}
@@ -2607,6 +2627,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 22627492}
     m_Modifications:
+    - target: {fileID: 687551629394829287, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 687551629394829287, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2064512380312331832, guid: 39d82b38de5fc4c41b54ec0961a14c37, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

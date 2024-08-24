@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class PlayerInventoryViewUI : InventoryViewUI
     private PlayerInventoryController playerInventoryController;
     [SerializeField] private Button useButton;
     [SerializeField] private Button sellButton;
+    [SerializeField] private Button randomizeButton;
     public UnityAction<InventoryItemData> SellItemEvent;
     public UnityAction<InventoryItemData,int> SellItemEventSureBox;
 
@@ -18,11 +20,18 @@ public class PlayerInventoryViewUI : InventoryViewUI
         useButton.onClick.AddListener(UseItem);
         sellButton.onClick.AddListener(SellItem);
         surelySellButton.onClick.AddListener(StartSellingEvent);
+        randomizeButton.onClick.AddListener(AddRandomItem);
         SellItemEvent += ShowSureBox;
         closeSureBox.onClick.AddListener(HideSureBox);
         SetButtonStatus(false);
         //SurelySellButton.onClick.AddListener(StartSellingEvent);
         HideSureBox();
+    }
+
+    private void AddRandomItem()
+    {
+        randomizeButton.gameObject.SetActive(false);
+        playerInventoryController.AddRandomItem();
     }
 
     private void OnDestroy()

@@ -1,4 +1,8 @@
 
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class ShopInventoryController: InventoryController
 {
     private ShopInventoryViewUI shopInventoryPage;
@@ -10,10 +14,11 @@ public class ShopInventoryController: InventoryController
         shopInventoryPage.UpdateInventory(shopInventoryModel.GetInventoryItemData());
     }
 
-    public ShopInventoryController(ShopInventoryViewUI shopInventoryViewUI,InventoryModel inventoryModel)
+    public ShopInventoryController(ShopInventoryViewUI shopInventoryViewUI,InventoryModel inventoryModel,List<InventoryItemData>AllItems)
     {
         this.shopInventoryPage = shopInventoryViewUI;
         this.shopInventoryModel = inventoryModel;
+        this.AllItems=AllItems;
     }
 
     public override void Init(SoundService soundService, MoneyService moneyService)
@@ -65,7 +70,7 @@ public class ShopInventoryController: InventoryController
 
     protected override void InitializeStartingItems()
     {
-        foreach (var item in shopInventoryModel.GetStartingItemData())
+        foreach (var item in AllItems)
         {
             shopInventoryModel.AddItem(item.item, item.quantity);
         }
