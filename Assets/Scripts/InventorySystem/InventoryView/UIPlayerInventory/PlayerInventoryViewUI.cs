@@ -24,7 +24,6 @@ public class PlayerInventoryViewUI : InventoryViewUI
         SellItemEvent += ShowSureBox;
         closeSureBox.onClick.AddListener(HideSureBox);
         SetButtonStatus(false);
-        //SurelySellButton.onClick.AddListener(StartSellingEvent);
         HideSureBox();
     }
 
