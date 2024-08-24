@@ -4,8 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="newInventory",menuName ="ScriptableObjects/newInventory")]
 public class InventoryModel : ScriptableObject
 {
-    public List<InventoryItemData> InventoryItemDatas;
-    //public List<InventoryItemData> AllElements;
+    private List<InventoryItemData> InventoryItemDatas;
     
     public void Initialize()
     {
