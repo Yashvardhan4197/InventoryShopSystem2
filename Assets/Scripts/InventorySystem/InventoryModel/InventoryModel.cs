@@ -5,7 +5,7 @@ using UnityEngine;
 public class InventoryModel : ScriptableObject
 {
     public List<InventoryItemData> InventoryItemDatas;
-    public List<InventoryItemData> AllElements;
+    //public List<InventoryItemData> AllElements;
     
     public void Initialize()
     {

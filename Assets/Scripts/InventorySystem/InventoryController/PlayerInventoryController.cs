@@ -95,7 +95,7 @@ public class PlayerInventoryController: InventoryController
     {
         int temp = UnityEngine.Random.Range(0,AllItems.Count);
         int tempQuantity = UnityEngine.Random.Range(1, 5);
-        playerInventoryModel.AddItem(playerInventoryModel.AllElements[temp].item, tempQuantity);
+        playerInventoryModel.AddItem(AllItems[temp].item, tempQuantity);
         playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
