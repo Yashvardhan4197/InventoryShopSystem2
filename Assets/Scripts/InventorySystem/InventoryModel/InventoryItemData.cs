@@ -5,20 +5,12 @@ public class InventoryItemData
 {
     public ItemData item;
     public int quantity;
-    public int itemID = -1;
+    public int MaximumQuantity;
 
     public InventoryItemData(ItemData item, int quantity)
     {
         this.item = item;
         this.quantity = quantity;
-        if (item != null)
-        {
-            this.itemID = item.id;
-        }
-        else
-        {
-            itemID = -1;
-        }
     }
 
     public bool isEmpty()
@@ -39,7 +31,6 @@ public class InventoryItemData
     public void ResetItemSlot()
     {
         item = null;
-        itemID = -1;
         quantity = -1;
 
     }

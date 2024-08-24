@@ -72,7 +72,8 @@ public class ShopInventoryController: InventoryController
     {
         foreach (var item in AllItems)
         {
-            shopInventoryModel.AddItem(item.item, item.quantity);
+            int tempQuantity=UnityEngine.Random.Range(item.quantity, item.MaximumQuantity);
+            shopInventoryModel.AddItem(item.item, tempQuantity);
         }
     }
 

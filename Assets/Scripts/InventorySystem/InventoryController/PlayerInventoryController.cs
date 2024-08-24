@@ -13,6 +13,22 @@ public class PlayerInventoryController: InventoryController
         playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
+    protected override void Initialize()
+    {
+        playerInventoryModel.Initialize();
+        InitializeStartingItems();
+        playerInventoryPage.SetController(this);
+        playerInventoryPage.InitializeItems(playerInventoryModel.GetInventoryItemData());
+        playerInventoryPage.UseItemEvent += UseItemButtonPressed;
+        playerInventoryPage.SellItemEventSureBox += SellItemSurely;
+        BoughtItemEvent += BoughtItem;
+    }
+
+    protected override void InitializeStartingItems()
+    {
+
+    }
+
     public PlayerInventoryController(PlayerInventoryViewUI playerInventoryPage, InventoryModel playerInventoryModel,List<InventoryItemData>AllItems)
     {
         this.playerInventoryPage = playerInventoryPage;
@@ -75,26 +91,11 @@ public class PlayerInventoryController: InventoryController
         }
     }
 
-    protected override void Initialize()
-    {
-        playerInventoryModel.Initialize();
-        InitializeStartingItems();
-        playerInventoryPage.SetController(this);
-        playerInventoryPage.InitializeItems(playerInventoryModel.GetInventoryItemData());
-        playerInventoryPage.UseItemEvent += UseItemButtonPressed;
-        playerInventoryPage.SellItemEventSureBox += SellItemSurely;
-        BoughtItemEvent += BoughtItem;
-    }
-
-    protected override void InitializeStartingItems()
-    {
-        
-    }
-
     public void AddRandomItem()
     {
         int temp = UnityEngine.Random.Range(0,AllItems.Count);
-        playerInventoryModel.AddItem(playerInventoryModel.AllElements[temp].item, playerInventoryModel.AllElements[temp].quantity);
+        int tempQuantity = UnityEngine.Random.Range(1, 5);
+        playerInventoryModel.AddItem(playerInventoryModel.AllElements[temp].item, tempQuantity);
         playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
@@ -103,6 +104,5 @@ public class PlayerInventoryController: InventoryController
         playerInventoryPage.UseItemEvent -= UseItemButtonPressed;
         playerInventoryPage.SellItemEventSureBox -= SellItemSurely;
     }
-
 
 }

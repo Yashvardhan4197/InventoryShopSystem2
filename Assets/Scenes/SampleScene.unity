@@ -1910,16 +1910,16 @@ MonoBehaviour:
   AllItemsList:
   - item: {fileID: 11400000, guid: 7d910a7a65d74ae43bfd397a08e0d3cb, type: 2}
     quantity: 3
-    itemID: 0
+    MaximumQuantity: 6
   - item: {fileID: 11400000, guid: 3df2631c98aa3354cab1abb324fb0179, type: 2}
     quantity: 5
-    itemID: 0
+    MaximumQuantity: 10
   - item: {fileID: 11400000, guid: fa46988de9b3f7e49b0b94f1638d5b6e, type: 2}
     quantity: 2
-    itemID: 0
+    MaximumQuantity: 4
   - item: {fileID: 11400000, guid: 4ee18a0a8e3f21d4ba2091f5e767559b, type: 2}
     quantity: 1
-    itemID: 0
+    MaximumQuantity: 4
   playerInventoryModel: {fileID: 11400000, guid: d0eb80f852121e447be88e996e6cab5e, type: 2}
   shopInventoryModel: {fileID: 11400000, guid: 9edf32a3e87b8e54594fc7dd5feb3bad, type: 2}
   playerInventoryView: {fileID: 1755744517}

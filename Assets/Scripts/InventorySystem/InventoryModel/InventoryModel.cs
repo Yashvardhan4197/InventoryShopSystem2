@@ -16,7 +16,7 @@ public class InventoryModel : ScriptableObject
     {
         foreach (var itemData in InventoryItemDatas)
         {
-            if (itemData.itemID != -1 && itemData.item == item)
+            if (itemData.item != null && itemData.item == item)
             {
                 itemData.ChangeQuantity(itemData.quantity+quantity);
                 return;
@@ -49,12 +49,4 @@ public class InventoryModel : ScriptableObject
         }
         return returnValue;
     }
-
-    /*
-    public List<StartingElements> GetStartingItemData()
-    {
-        List<StartingElements> returnValue = StartingElements;
-        return returnValue;
-    }*/
-
 }
