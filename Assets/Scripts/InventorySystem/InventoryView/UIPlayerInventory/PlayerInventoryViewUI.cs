@@ -36,6 +36,7 @@ public class PlayerInventoryViewUI : InventoryViewUI
     private void OnDestroy()
     {
         SellItemEvent -= ShowSureBox;
+        playerInventoryController.OnViewDestroy(); 
     }
 
     private void SellItem()

@@ -99,7 +99,7 @@ public class PlayerInventoryController: InventoryController
         playerInventoryPage.UpdateInventory(playerInventoryModel.GetInventoryItemData());
     }
 
-    ~PlayerInventoryController()
+    public void OnViewDestroy()
     {
         playerInventoryPage.UseItemEvent -= UseItemButtonPressed;
         playerInventoryPage.SellItemEventSureBox -= SellItemSurely;
