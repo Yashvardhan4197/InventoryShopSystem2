@@ -24,8 +24,10 @@ This project aims to recreate the an Inventory System using various design patte
 ---
 
 ### Project ScreenShots
-![Screenshot 2024-08-17 211412](https://github.com/user-attachments/assets/b7a36e13-0f01-4682-b951-a25b78945a74)
-![Screenshot 2024-08-17 211736](https://github.com/user-attachments/assets/299c50ec-81d9-4f7c-9c83-86242b966953)
+![Screenshot 2024-08-26 192318](https://github.com/user-attachments/assets/ed3dc6b7-4823-409b-8717-780f209e69e1)
+![Screenshot 2024-08-26 192337](https://github.com/user-attachments/assets/9f25f651-ecc6-4825-8001-91855646857a)
+![Screenshot 2024-08-26 192354](https://github.com/user-attachments/assets/c860c906-4b2e-431c-af45-1008490bbbd0)
+
 
 ---
 
